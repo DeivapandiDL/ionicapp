@@ -30,7 +30,8 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <label>Select Sub Category</label>{{subTemp.length}}{{subTempBoolean}}
+                                        <label>Select Sub Category</label>
+                                        <!-- {{subTemp.length}}{{subTempBoolean}} -->
                                         <select formControlName="subcategoryID" [disabled]="subTempBoolean" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.subcategoryID.errors }">
                                       <option value=""></option>
                                       <option [value]="subcat.subCatID" *ngFor="let subcat of subTemp">{{subcat.subCatName}}</option>
