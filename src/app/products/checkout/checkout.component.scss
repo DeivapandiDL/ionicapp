@@ -1,0 +1,26 @@
+.productSummary {
+    background: #ffffff;
+    padding: 15px;
+    box-shadow: 0 1px 3px #ccc
+}
+
+.totalsum {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 0 6px 0;
+    border-bottom: 1px solid #ccc;
+    margin: 0 0 5px 0;
+}
+
+.borderunset {
+    border: unset
+}
+
+.tableView {
+    background: #fff;
+    padding: 15px;
+}
+
+.checkoutProduct {
+    max-width: 100px;
+}

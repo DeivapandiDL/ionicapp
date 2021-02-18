@@ -1,0 +1,121 @@
+<div class="paddTop">
+    <div class="container">
+        <div class="row">
+            <div class="permaLink"><a routerLink="/home">Home</a>
+                <ion-icon name="arrow-forward"></ion-icon> <span>Products</span></div>
+        </div>
+    </div>
+    <section class="productGrid">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 flex_end">
+                    <button class="listView" [class.btActive]="list == 'grid'" (click)="view('grid')"><ion-icon ios="ios-grid" md="md-grid"></ion-icon> Grid View</button>
+                    <button class="listView" [class.btActive]="list == 'list'" (click)="view('list')"><ion-icon name="list"></ion-icon> List View</button>
+                    <div class="sortingBy"> <span>Sort By : </span>
+                        <select placeholder="Sort By" (change)="priceSort($event)">
+                        <option value="">Select</option>
+                        <option value="low">Low to High</option>
+                        <option value="high">High to Low</option>
+                    </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="subCatList">
+                        <h4 class="highlight">Sub Categories</h4>
+                        <ng-container *ngIf="productList && productList.length > 0">
+                            <a (click)="getAll(0)" [class.activeHighlight]="subcatSetID == 0">All Categories</a>
+                            <a *ngFor="let subcat of productList" [class.activeHighlight]="subcatSetID == subcat.subCatID" (click)="getAll(subcat.subCatID)">{{subcat.subCatName}}</a>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="gridRight">
+                        <ng-container *ngIf="productList && productList.length > 0">
+                            <ng-container *ngFor="let subcat of productList;">
+                                <!-- <div class="row" *ngIf="subcat.product && subcat.product.length > 0">
+                                <h2 class="col-md-12 catName text-center"><span>{{subcat.subCatName}}</span></h2>
+                            </div> -->
+                                <div class="row">
+                                    <ng-container *ngFor="let products of subcat.product;let i = index;">
+                                        <ng-container *ngIf="subcat.subCatID == subcatSetID || subcatSetID == 0;">
+                                            <div class="transtionAll" [ngClass]="{'col-md-4': list == 'grid', 'col-md-12 listViews': list == 'list'}">
+                                                <div class="gridProduct">
+                                                    <a class="ProductClick" (click)="gotoProductDesc(products.productName,products.productID)">
+                                                        <img *ngIf="products.productImage == '' " src="../../assets/images/product/1.jpg">
+                                                        <img *ngIf="products.productImage != '' " src="../../assets/images/{{products.categoryID}}/{{products.productImage}}">
+                                                    </a>
+                                                    <div class="productDesc">
+                                                        <div class="descProduct">
+                                                            <h4 tooltip="{{products.productName}}">{{products.productName}}</h4>
+                                                            <p>{{products.productDescription | slice:0:50}}...</p>
+                                                        </div>
+                                                        <div class="priceGrid">
+                                                            <span class="price">{{products.productRateSymbol}} {{products.productRate}}</span>
+                                                            <div class="countCart" *ngIf="products.quantityBool">
+                                                                <button (click)="countClick(products.productID,products.quantity,0)">-</button>
+                                                                <input type="text" class="text-center" [ngModel]="products.quantity">
+                                                                <button (click)="countClick(products.productID,products.quantity ? products.quantity : 0,1)">+</button>
+                                                            </div>
+                                                            <button *ngIf="!products.quantityBool" class="btn btn-danger btn-sm" (click)="openCount(products.productID)">ADD TO CART</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                        <ng-container *ngIf="!subcatSetIDBoolean">
+                                            <h2 class="text-center"> No Product Available</h2>
+                                        </ng-container>
+                                    </ng-container>
+
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                        <h2 class="text-center" *ngIf="productList.length == 0">No Product Available</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <a><img src="../../../assets/images/logo.png"></a>
+
+                </div>
+                <div class="col-md-3">
+                    <h4 class="highlight">STAY CONNECTED</h4>
+                    <p>Chenithra Technologies Private Limited, Madipakkam, Ponniamman kovil street, Chennai, 560103, Tamil Nadu, India</p>
+                    <p>Call - 044-4201023</p>
+                    <p>Mail - info@chenithra.com</p>
+                </div>
+                <div class="col-md-3">
+                    <h4 class="highlight">CONTACT</h4>
+                    <p>Facebook</p>
+                    <p>Twitter</p>
+                    <p>Yaaho</p>
+                    <p>Youtube</p>
+                </div>
+                <div class="col-md-3">
+                    <h4 class="highlight">POLICY</h4>
+                    <p>Return Policy</p>
+                    <p>Terms of Use</p>
+                    <p>Security</p>
+                    <p>Privacy</p>
+                    <p>Sitemap</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="btmFooter">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    2021 Chenithra Technologies Pvt Ltd. All Rights Reserved.
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

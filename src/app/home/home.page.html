@@ -1,20 +1,136 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<div class="paddTop">
+    <section>
+        <div class="container imgSlider-container">
+            <ion-slides pager="true" [options]="slideOptsOne" #slideWithNav (ionSlideDidChange)="SlideDidChange(sliderOne,slideWithNav)">
+                <ion-slide *ngFor="let s of sliderBanner.slidesItems">
+                    <div class="imgSlider" style="background:url('../assets/images/b{{s.id}}.jpg')">
+                        <h2>{{s.caption}}</h2>
+                    </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+                </ion-slide>
+            </ion-slides>
+        </div>
+    </section>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
-</ion-content>
+    <section class="productGrid">
+        <ng-container *ngFor="let product of productList">
+            <ng-container *ngIf="product.subcategory && product.subcategory.length > 0">
+                <div class="container">
+                    <div class="row">
+                        <h2 class="col-md-12 catName text-center"><span>{{product.catName}}</span></h2>
+                    </div>
+                </div>
+                <div class="container" *ngFor="let category of product.subcategory">
+                    <ng-container *ngIf="category.product && category.product.length > 0">
+                        <div class="row">
+                            <h3 class="col-md-12">{{category.subCatName}}</h3>
+                        </div>
+                        <div class="row">
+                            <ng-container *ngFor="let products of category.product;let i = index;">
+                                <div class="col-md-3" *ngIf="i < 4">
+                                    <div class="gridProduct">
+                                        <!-- <img src="../../assets/images/product/1.jpg"> -->
+                                        <a class="ProductClick" (click)="gotoProductDesc(products.productName,products.productID)">
+                                            <img *ngIf="products.productImage == '' " src="../../assets/images/product/1.jpg">
+                                            <img *ngIf="products.productImage != '' " src="../../assets/images/{{products.categoryID}}/{{products.productImage}}">
+                                        </a>
+                                        <div class="productDesc">
+                                            <h4 class="truncText" tooltip="{{products.productName}}">{{products.productName}}</h4>
+                                            <div class="descProduct">
+                                                {{products.productDescription | slice:0:50}}... </div>
+                                            <div class="priceGrid">
+                                                <span class="price">{{products.productRateSymbol}} {{products.productRate}}</span>
+                                                <div class="countCart" *ngIf="products.quantityBool">
+                                                    <button (click)="countClick(products.productID,products.quantity,0)">-</button>
+                                                    <input type="text" class="text-center" [ngModel]="products.quantity">
+                                                    <button (click)="countClick(products.productID,products.quantity,1)">+</button>
+                                                </div>
+                                                <button *ngIf="!products.quantityBool" class="btn btn-danger btn-sm" (click)="openCount(products.productID)">ADD TO CART</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </ng-container>
+                </div>
+            </ng-container>
+        </ng-container>
+    </section>
+    <section class="productGrid" *ngIf="userLogin && purchaseProduct.length > 0">
+        <div class="container">
+            <div class="row">
+                <h2 class="col-md-12 catName text-center"><span>Recent Purchased</span></h2>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <ng-container *ngFor="let products of purchaseProduct;let j = index;">
+                        <div class="col-md-3" *ngIf="j < 4">
+                            <div class="gridProduct">
+                                <!-- <img src="../../assets/images/product/1.jpg"> -->
+                                <a class="ProductClick">
+                                    <img *ngIf="products.productImage == '' " src="../../assets/images/product/1.jpg">
+                                    <img *ngIf="products.productImage != '' " src="../../assets/images/{{products.categoryID}}/{{products.productImage}}">
+                                </a>
+                                <div class="productDesc">
+                                    <h4 class="truncText">{{products.productName}}</h4>
+                                    <!-- <div class="descProduct" tooltip="{{products.productDescription}}">
+                                        {{products.productDescription | slice:0:50}}... </div> -->
+                                    <div class="priceGrid">
+                                        <span class="price">$ {{products.productRate}}</span>
+                                        <div class="countCart">
+                                            <button (click)="countClick(products.productID,products.quantity,0)">-</button>
+                                            <input type="text" class="text-center" [ngModel]="products.quantity">
+                                            <button (click)="countClick(products.productID,products.quantity,1)">+</button>
+                                        </div>
+                                        <!-- <button *ngIf="!products.quantityBool" class="btn btn-danger btn-sm" (click)="openCount(products.productID)">ADD TO CART</button> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <a><img src="../../../assets/images/logo.png"></a>
+
+                </div>
+                <div class="col-md-3">
+                    <h4 class="highlight">STAY CONNECTED</h4>
+                    <p>Chenithra Technologies Private Limited, Madipakkam, Ponniamman kovil street, Chennai, 560103, Tamil Nadu, India</p>
+                    <p>Call - 044-4201023</p>
+                    <p>Mail - info@chenithra.com</p>
+                </div>
+                <div class="col-md-3">
+                    <h4 class="highlight">CONTACT</h4>
+                    <p>Facebook</p>
+                    <p>Twitter</p>
+                    <p>Yaaho</p>
+                    <p>Youtube</p>
+                </div>
+                <div class="col-md-3">
+                    <h4 class="highlight">POLICY</h4>
+                    <p>Return Policy</p>
+                    <p>Terms of Use</p>
+                    <p>Security</p>
+                    <p>Privacy</p>
+                    <p>Sitemap</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="btmFooter">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    2021 Chenithra Technologies Pvt Ltd. All Rights Reserved.
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

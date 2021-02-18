@@ -1,0 +1,39 @@
+.priceAddCart {
+    display: flex;
+    justify-content: space-between;
+}
+
+.priceAddCart .count button {
+    background: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 0px;
+    width: 30px;
+    height: 30px;
+}
+
+.priceAddCart .count button:focus {
+    outline: none !important
+}
+
+.priceAddCart button.add {
+    height: 30px;
+    margin-left: 50px;
+}
+
+.priceAddCart .count input {
+    width: 35px;
+    height: 30px;
+    text-align: center;
+    border-radius: 0px;
+    border: 1px solid #ccc;
+    border-right: 0px;
+    border-left: 0px;
+}
+
+.priceAddCart .priceCount {
+    display: flex;
+}
+
+.priceAmt {
+    color: #9c1a2c
+}
