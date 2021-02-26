@@ -36,7 +36,7 @@ var mysqlConnection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'nodepracticedb',
+    database: 'goatoo',
     multipleStatements: true
 });
 mysqlConnection.connect((err) => {
