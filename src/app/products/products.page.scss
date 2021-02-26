@@ -161,3 +161,23 @@ button.listView.btActive {
     background: #9c1a2c;
     color: #fff;
 }
+
+.ProductClick img {
+    height: 180px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.noProduct {
+    min-height: 200px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+a.wishlist {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    cursor: pointer;
+}

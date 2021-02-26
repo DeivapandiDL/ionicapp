@@ -111,7 +111,7 @@ div a:hover {
 
 div,
 p {
-    color: #808080
+    color: #333;
 }
 
 h2,
@@ -205,9 +205,155 @@ button:focus {
     justify-content: flex-end;
 }
 
+.star {
+    color: #9c1a2c
+}
+
+textarea.form-control {
+    height: 100px !important;
+    resize: none;
+}
+
+.invalid-feedback * {
+    color: #9c1a2c !important;
+    font-size: 12px;
+    // position: absolute;
+}
+
+.form-group {
+    margin-bottom: 20px !important
+}
+
+.form-group label {
+    font-weight: 500;
+}
+
+dp-date-picker {
+    display: block !important;
+}
+
+dp-date-picker.dp-material .dp-picker-input {
+    display: block;
+    width: 100% !important;
+    height: calc(1.5em + .75rem + 2px) !important;
+    padding: .375rem .75rem;
+    font-size: 1rem !important;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.pickerControl.is-invalid input,
+.was-validated .pickerControl:invalid input {
+    border-color: #dc3545;
+    padding-right: 0;
+}
+
+table td p {
+    margin: 0
+}
+
+.fewLeft {
+    color: #9c1a2c;
+    font-weight: bold;
+    margin: 0 0 20px 0;
+}
+
+.outStack {
+    color: #008000;
+    margin: 0 0 20px 0;
+    font-size: 30px;
+}
+
+.outStackproduct {
+    font-size: 14px;
+    position: absolute;
+    bottom: 80px;
+    color: #008000;
+    text-align: center;
+}
+
+.fewLeftproduct {
+    font-size: 14px;
+    position: absolute;
+    color: #9c1a2c;
+    bottom: 80px;
+    text-align: center;
+    font-weight: bold
+}
+
 @media (min-width: 1200px) {
     .container {
         width: 90% !important;
         max-width: 1400px !important;
     }
+}
+
+// slider design
+.slideGrid {
+    display: flex;
+    width: 1110px;
+    flex-direction: column;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.sliderContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    transition: all 0.4s linear;
+    -webkit-transition: all 0.4s linear;
+    -moz-transition: all 0.4s linear;
+    -ms-transition: all 0.4s linear;
+    -o-transition: all 0.4s linear;
+}
+
+.slides {
+    max-width: calc(280px - 15px);
+    width: 100%;
+    margin: 0 15px 0 0;
+}
+
+.relativeClass {
+    position: relative
+}
+
+.sliderPrevNext {
+    position: absolute;
+    top: calc(50% - 20px);
+    border: 1px solid #9c1a2c;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    font-size: 30px;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+    transition: all 0.3s lienar;
+    -webkit-transition: all 0.3s lienar;
+    -moz-transition: all 0.3s lienar;
+    -ms-transition: all 0.3s lienar;
+    -o-transition: all 0.3s lienar;
+}
+
+.sliderPrevNext:hover {
+    background: #9c1a2c;
+    color: #fff;
+    text-decoration: none !important;
+}
+
+.sliderPrevNext.prev {
+    left: 0
+}
+
+.sliderPrevNext.next {
+    right: 0
 }

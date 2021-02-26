@@ -4,6 +4,10 @@
     margin: 0 0 30px 0;
 }
 
+h3 {
+    text-transform: uppercase;
+}
+
 .catName {
     text-transform: uppercase;
     position: relative;
@@ -49,9 +53,10 @@
 
 .productDesc h4 {
     font-size: 18px;
-    margin: 0 0 14px 0;
-    font-weight: normal;
+    margin: 0 0 0px 0;
     color: #9c1a2c;
+    text-transform: capitalize;
+    padding-bottom: 10px;
 }
 
 .imgSlider {
@@ -103,4 +108,17 @@
     -moz-border-radius: 0px;
     -ms-border-radius: 0px;
     -o-border-radius: 0px;
+}
+
+.ProductClick img {
+    height: 180px;
+    width: 100%;
+    object-fit: cover;
+}
+
+a.wishlist {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    cursor: pointer;
 }

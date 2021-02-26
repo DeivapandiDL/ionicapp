@@ -29,7 +29,10 @@
                             <ng-container *ngFor="let products of category.product;let i = index;">
                                 <div class="col-md-3" *ngIf="i < 4">
                                     <div class="gridProduct">
-                                        <!-- <img src="../../assets/images/product/1.jpg"> -->
+                                        <a class="wishlist">
+                                            <img *ngIf="!products.wishlist" (click)="addWishlist(products.productID)" src="../../assets/images/heart_white.png">
+                                            <img *ngIf="products.wishlist" (click)="deleteWishlist(products.productID)" src="../../assets/images/heart_red.png">
+                                        </a>
                                         <a class="ProductClick" (click)="gotoProductDesc(products.productName,products.productID)">
                                             <img *ngIf="products.productImage == '' " src="../../assets/images/product/1.jpg">
                                             <img *ngIf="products.productImage != '' " src="../../assets/images/{{products.categoryID}}/{{products.productImage}}">
@@ -38,14 +41,22 @@
                                             <h4 class="truncText" tooltip="{{products.productName}}">{{products.productName}}</h4>
                                             <div class="descProduct">
                                                 {{products.productDescription | slice:0:50}}... </div>
+                                            <div class="fewLeftproduct" *ngIf="products.productCount < 4 && products.productCount > 0">
+                                                ! hurry few left
+                                            </div>
+                                            <div class="outStackproduct" *ngIf="products.productCount == 0">
+                                                Out of Stock
+                                            </div>
                                             <div class="priceGrid">
                                                 <span class="price">{{products.productRateSymbol}} {{products.productRate}}</span>
-                                                <div class="countCart" *ngIf="products.quantityBool">
+                                                <!-- <div class="countCart" *ngIf="products.quantityBool">
                                                     <button (click)="countClick(products.productID,products.quantity,0)">-</button>
                                                     <input type="text" class="text-center" [ngModel]="products.quantity">
                                                     <button (click)="countClick(products.productID,products.quantity,1)">+</button>
-                                                </div>
-                                                <button *ngIf="!products.quantityBool" class="btn btn-danger btn-sm" (click)="openCount(products.productID)">ADD TO CART</button>
+                                                </div> -->
+                                                <!-- <button *ngIf="!products.quantityBool" class="btn btn-danger btn-sm" (click)="openCount(products.productID)">ADD TO CART</button> -->
+                                                <button class="btn btn-danger btn-sm" (click)="gotoProductDesc(products.productName,products.productID)">ADD TO CART</button>
+
                                             </div>
                                         </div>
                                     </div>
@@ -62,36 +73,64 @@
             <div class="row">
                 <h2 class="col-md-12 catName text-center"><span>Recent Purchased</span></h2>
             </div>
-            <div class="container">
-                <div class="row">
-                    <ng-container *ngFor="let products of purchaseProduct;let j = index;">
-                        <div class="col-md-3" *ngIf="j < 4">
-                            <div class="gridProduct">
-                                <!-- <img src="../../assets/images/product/1.jpg"> -->
-                                <a class="ProductClick">
-                                    <img *ngIf="products.productImage == '' " src="../../assets/images/product/1.jpg">
-                                    <img *ngIf="products.productImage != '' " src="../../assets/images/{{products.categoryID}}/{{products.productImage}}">
-                                </a>
-                                <div class="productDesc">
-                                    <h4 class="truncText">{{products.productName}}</h4>
-                                    <!-- <div class="descProduct" tooltip="{{products.productDescription}}">
-                                        {{products.productDescription | slice:0:50}}... </div> -->
-                                    <div class="priceGrid">
-                                        <span class="price">$ {{products.productRate}}</span>
-                                        <div class="countCart">
-                                            <button (click)="countClick(products.productID,products.quantity,0)">-</button>
-                                            <input type="text" class="text-center" [ngModel]="products.quantity">
-                                            <button (click)="countClick(products.productID,products.quantity,1)">+</button>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 relativeClass" (mouseenter)="myStopFunction()" (mouseleave)="myStartFunction()">
+                    <a class="sliderPrevNext prev" (click)="getSliderPrev(0)">
+                        <</a>
+                            <ng-container>
+                                <div class="slideGrid">
+                                    <div class="sliderContainer" #sliderWidth [ngStyle]="marginDataSet" [style.width.px]="widthContainer">
+                                        <div class="slides" *ngFor="let products of purchaseProduct;let j = index;">
+                                            <div class="gridProduct">
+                                                <a class="ProductClick">
+                                                    <img *ngIf="products.productImage == '' " src="../../assets/images/product/1.jpg">
+                                                    <img *ngIf="products.productImage != '' " src="../../assets/images/{{products.categoryID}}/{{products.productImage}}">
+                                                </a>
+                                                <div class="productDesc">
+                                                    <h4 class="truncText">{{products.productName}}</h4>
+                                                    <div class="descProduct" tooltip="{{products.productDesc}}">
+                                                        {{products.productDesc | slice:0:50}}... </div>
+                                                    <div class="priceGrid">
+                                                        <span class="price">$ {{products.productPrice}}</span>
+                                                        <button class="btn btn-danger btn-sm" (click)="gotoProductDesc(products.productName,products.productID)">ADD TO CART</button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <!-- <button *ngIf="!products.quantityBool" class="btn btn-danger btn-sm" (click)="openCount(products.productID)">ADD TO CART</button> -->
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </ng-container>
+                                <a class="sliderPrevNext next" (click)="getSliderPrev(1)">></a>
+                            </ng-container>
                 </div>
             </div>
         </div>
+
+        <!-- <div class="container">
+            <div class="row">
+                <ng-container *ngFor="let products of purchaseProduct;let j = index;">
+                    <div class="col-md-3" *ngIf="j < 4">
+                        <div class="gridProduct">
+                            <a class="ProductClick">
+                                <img *ngIf="products.productImage == '' " src="../../assets/images/product/1.jpg">
+                                <img *ngIf="products.productImage != '' " src="../../assets/images/{{products.categoryID}}/{{products.productImage}}">
+                            </a>
+                            <div class="productDesc">
+                                <h4 class="truncText">{{products.productName}}</h4>
+                                <div class="descProduct" tooltip="{{products.productDesc}}">
+                                    {{products.productDesc | slice:0:50}}... </div>
+                                <div class="priceGrid">
+                                    <span class="price">$ {{products.productPrice}}</span>
+                                    <button class="btn btn-danger btn-sm" (click)="gotoProductDesc(products.productName,products.productID)">ADD TO CART</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div> -->
     </section>
     <section class="footer">
         <div class="container">

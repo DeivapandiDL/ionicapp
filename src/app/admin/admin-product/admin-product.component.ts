@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { AppserviceService } from 'src/app/services/appservice.service';
 import { Router } from '@angular/router';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
 
 @Component({
   selector: 'app-admin-product',
@@ -16,7 +17,25 @@ export class AdminProductComponent implements OnInit {
   getProduct:any = {};
   uploadedFiles: Array < File > ;
   constructor(private formBuilder: FormBuilder,private router:Router,private http:HttpClient, private appservice:AppserviceService) { }
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
 
+  fileChangeEvent(event: any): void {
+      this.imageChangedEvent = event;
+  }
+  imageCropped(event: ImageCroppedEvent) {
+      this.croppedImage = event.base64;
+      console.log(this.croppedImage);
+  }
+  imageLoaded(image: HTMLImageElement) {
+      // show cropper
+  }
+  cropperReady() {
+      // cropper ready
+  }
+  loadImageFailed() {
+      // show message
+  }
   ngOnInit() {
     if(this.appservice.adminProductId != ''){
       this.getProductEdit(this.appservice.adminProductId);
@@ -31,7 +50,9 @@ export class AdminProductComponent implements OnInit {
       productDescription: ['', Validators.required],
       productRateSymbol: ['', Validators.required],
       productRate: ['', Validators.required],
+      expiryDate:['',Validators.required],
       productOfferPercent: ['', Validators.required],
+      // image:['']
       
   });
   this.getCategoryList();
@@ -94,8 +115,15 @@ textOnly(event){
   }
 
   fileToUpload: any;
-  imageUrl: any;
+  imageUrl: string = "";
 
+
+  getImageupload(){
+    console.log(this.croppedImage);
+    // this.appservice.productImageUpload(this.croppedImage).subscribe(data => {
+    //   console.log(data);
+    // });
+  }
 
 
      get f() { return this.registerProduct.controls; }
@@ -137,17 +165,16 @@ cat='';
 
      pdtSubmit() {
          this.submitted = true;
- 
          // stop here if form is invalid
          if (this.registerProduct.invalid) {
              return;
          } 
          // display form values on success
-         this.registerProduct.value.productImage=this.uploadedFiles[0].name;
-        //  console.log('uploadedFiles details:::',this.uploadedFiles);
-        //  alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerProduct.value, null, 4));
+         this.registerProduct.value.productImage='';
+        //  this.registerProduct.value.image = this.croppedImage;
          this.appservice.getAddProductDetails(this.registerProduct.value).subscribe(data => {
           console.log('product details:::',data);
+          console.log('product values',this.registerProduct.value);
           if(data == 'true'){
             this.router.navigate(['admin/AdminProductList']);
           }

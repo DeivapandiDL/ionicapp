@@ -122,10 +122,19 @@ button.listView.btActive {
 
 .card.customCard.gridViewCol .checkoutProduct {
     max-width: calc(100% + 30px);
-    margin: -15px 0 0 -15px;
+    margin: 0 auto 0 auto;
+    object-fit: contain;
+    height: 100px;
 }
 
 .card.customCard.gridViewCol h5 {
     width: 100%;
     margin-bottom: 11px;
+}
+
+.searchHistory {
+    max-width: 280px;
+    margin: 0 15px 0 0px;
+    height: 30px;
+    width: 100%;
 }

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AppserviceService } from '../services/appservice.service'; 
 import { Router } from '@angular/router';
-
+import { CookieService } from 'ngx-cookie-service';
+import swal from 'sweetalert2';
 @Component({
   selector: 'app-products',
   templateUrl: './products.page.html',
@@ -10,13 +11,26 @@ import { Router } from '@angular/router';
 export class ProductsPage implements OnInit {
   getProductCount:any = [];
   list:string = 'grid';
-  constructor(private appService:AppserviceService,private router:Router) {
+  userDetailsAuth:any = {};
+  constructor(private cookieService:CookieService,private appService:AppserviceService,private router:Router) {
     let pr = JSON.parse(sessionStorage.getItem("getProductCount"));
     if(pr){ 
     this.getProductCount = pr;
     // this.removeZeroCount();
     }
+    this.getUserAuth();
    }
+   userLogin:boolean = false;
+   getUserAuth(){
+    let obj = JSON.parse(this.cookieService.get('userDetails'));
+    if(obj){ 
+    this.userDetailsAuth = obj;
+    console.log(this.userDetailsAuth);
+    if(Object.keys(this.userDetailsAuth).length > 0){
+      this.userLogin = true;
+    }
+  }
+  }
   menuId:any = {};
   menuName:string = "";
   productList:any = [];
@@ -84,6 +98,60 @@ export class ProductsPage implements OnInit {
     }
   }
 
+  getWishlistData:any = [];
+getWishlist(){
+  this.appService.getWishlist(this.userDetailsAuth.id).subscribe(data =>{
+    console.log("data wishlist");
+    console.log(data);
+    this.getWishlistData = data;
+    console.log(this.productList);
+      this.productList.forEach(subcat => {
+      subcat.product.forEach(product =>{
+        product.wishlist = false;
+        this.getWishlistData.forEach(wish =>{
+        if((product.productID == wish.productID) && (wish.customerID == this.userDetailsAuth.id)){
+          product.wishlist = true;
+          console.log(product);
+        }
+      });
+    });
+  });
+  })
+}
+
+  addWishlist(id){
+    if(!this.userLogin){
+      console.log(id);
+      swal({
+        title: "Login Necessary",
+        type: 'warning',
+        showConfirmButton: true,
+        showCancelButton: false    
+      })
+      .then((willDelete) => {
+      });
+      return;
+    }
+    else{
+      let obj = {
+        productID:id,
+        customerID:this.userDetailsAuth.id
+      }
+      this.appService.postWishlist(obj).subscribe(data => {
+        console.log(data);
+        this.getWishlist();
+      })
+  
+    } 
+  }
+  
+  deleteWishlist(id){
+    this.appService.deleteWishlist(id).subscribe(data => {
+      console.log(data);
+      this.getWishlist();
+    })
+  }
+
   getProducts(){
     this.appService.getProductList().subscribe((data) => {
         if(data){
@@ -117,6 +185,7 @@ productArr:any = {};
       console.log(data);
       this.productList = data;
       this.getProductQuantity();
+      this.getWishlist();
     })
   });
   }

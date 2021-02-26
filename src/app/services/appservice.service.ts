@@ -200,6 +200,22 @@ getAddProductDetails(data){
 )
 }
 
+
+productImageUpload(data){
+  var headers = new HttpHeaders();
+  headers.append('Access-Control-Allow-Origin' , '*');
+  headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
+  headers.append('Accept','application/json');
+  headers.append('Content-Type','application/x-www-form-urlencoded;text/plain; charset=utf-8');
+  headers.append('Access-Control-Allow-Credentials','true');
+  headers.append('Access-Control-Allow-Headers','Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
+  console.log('add new product',data);
+ return this.http.post(this.base_path+'productImageUpload',data,{headers: headers ,responseType: 'text'}).pipe(
+  retry(2),
+  catchError(this.handleError)
+)
+}
+
 updateCustomer(data){
   var headers = new HttpHeaders();
   headers.append('Access-Control-Allow-Origin' , '*');
@@ -232,6 +248,51 @@ getCustomerProduct(id){
     catchError(this.handleError)
   )
 }
+
+editProduct(data){
+  var headers = new HttpHeaders();
+  headers.append('Access-Control-Allow-Origin' , '*');
+  headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
+  headers.append('Accept','application/json');
+  headers.append('Content-Type','application/x-www-form-urlencoded;text/plain; charset=utf-8');
+  headers.append('Access-Control-Allow-Credentials','true');
+  headers.append('Access-Control-Allow-Headers','Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
+  console.log('add new product',data);
+ return this.http.post(this.base_path+'editProduct',data,{headers: headers ,responseType: 'text'}).pipe(
+  retry(2),
+  catchError(this.handleError)
+)
+}
+
+getWishlist(id){
+  return this.http.get(this.base_path+'getWishlist/'+id).pipe(
+    retry(2),
+    catchError(this.handleError)
+  )
+}
+
+postWishlist(obj){
+  var headers = new HttpHeaders();
+  headers.append('Access-Control-Allow-Origin' , '*');
+  headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
+  headers.append('Accept','application/json');
+  headers.append('Content-Type','application/x-www-form-urlencoded;text/plain; charset=utf-8');
+  headers.append('Access-Control-Allow-Credentials','true');
+  headers.append('Access-Control-Allow-Headers','Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
+  console.log('add new product',obj);
+ return this.http.post(this.base_path+'wishlist',obj,{headers: headers ,responseType: 'text'}).pipe(
+  retry(2),
+  catchError(this.handleError)
+)
+}
+
+deleteWishlist(id){
+  return this.http.get(this.base_path+'deleteWishlist/'+id).pipe(
+  retry(2),
+  catchError(this.handleError)
+)
+}
+
 
 
 }

@@ -42,6 +42,14 @@ getProductStoreCount:any = [];
     },500);
   }
 
+  numberOnly(event):boolean{
+    const charCode=event.which ? event.which : event.keyCode;
+    if(charCode > 31 && (charCode < 48 || charCode > 57)){
+      return false;
+    }
+    return true;
+  }
+
   getProductDetails(id){
     this.appService.getProductDetails(id).subscribe(data =>{
       console.log(data);
@@ -80,8 +88,15 @@ console.log(decryptedData);
   
 }
 
-addToCart(){
-  this.appService.changeCount(this.productArr);
+addToCart(id,cartNumber){
+  if(Object.keys(this.productArr).length > 0){
+    console.log("if ", this.productArr);
+  }
+  else{
+    this.productArr = {'count':this.cartNumber,'productId':id};
+    console.log("else ", this.productArr)
+  }
+ this.appService.changeCount(this.productArr);
   if(this.getProductStoreCount.length > 0){
     this.tempcount = this.getProductStoreCount.filter(data => {return data.productId == this.productArr.productId});
     console.log(this.tempcount);

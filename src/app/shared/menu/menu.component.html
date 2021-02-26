@@ -12,9 +12,10 @@
         <div class="loginNav dFlex searchNav">
             <a (click)="loginCredFun()" *ngIf="loginCred == ''" class="pointer">Login</a>
             <a class="profileNameIcon" (click)="profileEdit()" *ngIf="loginCred != ''">{{loginCred}} <ion-icon name="arrow-round-down"></ion-icon></a>
-            <div class="dropdownLoginMenu" *ngIf="profileDropdown">
+            <div class="dropdownLoginMenu" *ngIf="profileDropdown" (clickOutside)="toggleLoginMenu()">
                 <a (click)="closeDropdown()" routerLink="/login/editProfile">Edit Profile</a>
                 <a (click)="closeDropdown()" routerLink="/products/order-history">Order History</a>
+                <a (click)="closeDropdown()" routerLink="products/wishlist">wishlist</a>
                 <a (click)="logout()">Logout</a>
             </div>
             <div class="cartIcon">
@@ -22,7 +23,7 @@
                     <ion-icon ios="ios-cart" md="md-cart"></ion-icon>
                     <span *ngIf="count > 0" class="cartClass">{{count}}</span>
                 </a>
-                <div class="cartDropDown" *ngIf="showDropdown">
+                <div class="cartDropDown" *ngIf="showDropdown" (clickOutside)="toggleDropdownCheckout()">
                     <h4>Order Summary</h4>
                     <div class="cartDatas" *ngFor="let cart of showDataCart">
                         <div class="cartProductName">{{cart.productName}}</div>

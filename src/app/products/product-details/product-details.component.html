@@ -19,6 +19,12 @@
                 <div class="col-md-6">
                     <h2>{{getProductList.productName}}</h2>
                     <p>{{getProductList.productDescription}}</p>
+                    <div class="fewLeft" *ngIf="getProductList.productCount < 4 && getProductList.productCount > 0">
+                        ! hurry few left
+                    </div>
+                    <div class="outStack" *ngIf="getProductList.productCount == 0">
+                        Out of Stock
+                    </div>
                     <div class="priceAddCart">
                         <div class="priceAmt">
                             <h3>{{getProductList.productRateSymbol}} {{getProductList.productRate}} </h3>
@@ -26,7 +32,7 @@
                         <div class="priceCount">
                             <div class="count">
                                 <button (click)="countClick(0)">-</button>
-                                <input type="text" (change)="getTypeNumber($event)" [(ngModel)]="cartNumber">
+                                <input type="text" (keypress)="numberOnly($event)" [(ngModel)]="cartNumber">
                                 <button (click)="countClick(1)">+</button>
                             </div>
                             <button (click)="addToCart(getProductList.productID,cartNumber)" class="btn btn-danger btn-sm add">ADD TO CART</button>

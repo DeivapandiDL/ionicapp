@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppserviceService } from 'src/app/services/appservice.service';
 import swal from 'sweetalert2';
 import { Router } from '@angular/router';
-
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-checkout',
@@ -13,7 +13,7 @@ export class CheckoutComponent implements OnInit {
   getProductCount:any = [];
   userDetailsAuth:any = {};
   goToLogin:boolean = false;
-  constructor(private appService:AppserviceService,private router:Router) { 
+  constructor(private cookieService: CookieService,private appService:AppserviceService,private router:Router) { 
     this.getProductCount = JSON.parse(sessionStorage.getItem("getProductCount"));
     this.getUserAuth()
   }
@@ -23,7 +23,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   getUserAuth(){
-    let obj = JSON.parse(sessionStorage.getItem('userDetails'));
+    let obj = JSON.parse(this.cookieService.get('userDetails'));
     if(obj){ 
     this.userDetailsAuth = obj;
     console.log(this.userDetailsAuth);
@@ -82,7 +82,7 @@ proceedtoCheckout(){
   if(Object.keys(this.userDetailsAuth).length > 0){
     this.showDataCart.forEach(element => {
       element.customerID = this.userDetailsAuth.id;
-      obj.push({'productName':element.productName,'productID':element.productID,'productImage':element.imgURL,'categoryID':element.categoryID,'customerID':this.userDetailsAuth.id,'productQuantity':element.quantity,'productPrice':element.productRate,'totalPrice':element.productTotalRate})
+      obj.push({'productName':element.productName,'productDesc':element.productDescription,'productID':element.productID,'productImage':element.imgURL,'categoryID':element.categoryID,'customerID':this.userDetailsAuth.id,'productQuantity':element.quantity,'productPrice':element.productRate,'totalPrice':element.productTotalRate})
     });
     console.log(obj);
     console.log(this.showDataCart);
@@ -131,6 +131,95 @@ proceedtoCheckout(){
       
     });
   }
+
+  tempcountCart:any = [];
+  countClick(cart,nos){
+    
+    if(nos == 0){ 
+    if(cart.quantity > 1){
+      cart.quantity = cart.quantity - 1;
+    }
+    else if(cart.quantity == 1){
+      this.showDataCart.forEach((count,index) => {
+        if(count.productID == cart.productID)  
+        {
+          this.showDataCart.splice(index,1);
+          cart.quantity = 0;
+        }
+      });
+    }
+  }
+  else if(nos == 1){
+    cart.quantity = cart.quantity + 1;
+  }
+  
+  let product = {'count':cart.quantity,'productId':cart.productID}
+  this.appService.changeCount(product);
+  if(this.getProductCount.length > 0){
+    this.tempcountCart = this.getProductCount.filter(data => {return data.productId == product.productId});
+    console.log(this.tempcountCart);
+    if(this.tempcountCart.length == 0){
+      this.getProductCount.push(product);
+    }
+    else if(this.tempcountCart.length > 0){
+      this.getProductCount.forEach((element,index) => {
+        if(element.productId == this.tempcountCart[0].productId){
+          if(product.count == 0)
+          {
+            this.getProductCount.splice(index, 1);
+          }
+          else{
+            element.count = product.count;
+          }
+          
+        }
+      });
+    }
+   }
+   else if(this.getProductCount.length == 0){
+     this.getProductCount.push(product);
+   }
+   this.tempcountCart = [];
+  sessionStorage.setItem("getProductCount",JSON.stringify(this.getProductCount));
+  setTimeout(() =>{
+    this.getProductCountDetails();
+  },500);
+}
+count:any;
+getProductCountDetails(){
+  if(this.getProductCount.length > 0){ 
+    console.log(this.getProductCount);
+  }
+  else{
+    let datacount = JSON.parse(sessionStorage.getItem("getProductCount"));
+    if(datacount && datacount.length > 0){ 
+    this.getProductCount = datacount;
+    this.count = this.getProductCount.map(a => a.count).reduce(function(a, b)
+      {
+        return a + b;
+      });
+    }
+  }
+  let tempCountPrice = []
+  this.productList.forEach(element => {
+    this.getProductCount.forEach(count => {
+      if(element.productID == count.productId)  
+      {
+        element.quantity = count.count;
+        element.productTotalRate = element.productRate * element.quantity;
+        tempCountPrice.push(element)
+      }
+    });
+  });
+
+  this.totalPrice = tempCountPrice.map(a => a.productTotalRate).reduce(function(a, b)
+      {
+        return a + b;
+      });
+      console.log(this.totalPrice);
+
+}
+
 
 
 }

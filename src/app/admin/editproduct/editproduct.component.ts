@@ -27,7 +27,7 @@ export class EditproductComponent implements OnInit {
       categoryID : ['', Validators.required],
       subcategoryID: ['', Validators.required],
       productCount: ['', Validators.required],
-      productImage: ['', Validators.required],
+      productImage: [''],
       productDescription: ['', Validators.required],
       productRateSymbol: ['', Validators.required],
       productRate: ['', Validators.required],
@@ -37,12 +37,14 @@ export class EditproductComponent implements OnInit {
   this.getCategoryList();
   this.getSubCategory();
   }
+  
   editProductBoolean:boolean = false;
   getProductEdit(id){
     this.appservice.getProductDetails(id).subscribe(data =>{
       console.log(data);
       if(data){ 
       this.getProduct = data[0];
+      console.log('product id',this.getProduct);
       this.editProductBoolean = true;
       }
     })
@@ -77,9 +79,9 @@ textOnly(event){
   catSelect(event){
     this.subTemp=[];
     this.subTempBoolean=true;
-    console.log(event.target.value);
+    console.log(event);
     this.subCatList.forEach(element => {
-      if(event.target.value==element.catID){
+      if(event==element.catID){
         this.subTemp.push(element);
       }
     });
@@ -88,10 +90,13 @@ textOnly(event){
     }
     
   }
+
+
   getSubCategory(){
     this.appservice.getSubCategory().subscribe(data => {
       console.log('category details:::',data);
       this.subCatList=data;
+      this.catSelect(this.getProduct.categoryID);
   })
 
   }
@@ -145,11 +150,7 @@ cat='';
          if (this.registerProduct.invalid) {
              return;
          } 
-         // display form values on success
-         this.registerProduct.value.productImage=this.uploadedFiles[0].name;
-        //  console.log('uploadedFiles details:::',this.uploadedFiles);
-        //  alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.registerProduct.value, null, 4));
-         this.appservice.getAddProductDetails(this.registerProduct.value).subscribe(data => {
+         this.appservice.editProduct(this.getProduct).subscribe(data => {
           console.log('product details:::',data);
           if(data == 'true'){
             this.router.navigate(['admin/AdminProductList']);

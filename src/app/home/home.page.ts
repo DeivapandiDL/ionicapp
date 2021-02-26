@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild,ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxCarousel } from 'ngx-carousel';
 import { AppserviceService } from 'src/app/services/appservice.service';
 import { IonSlides } from '@ionic/angular';
 import { Router } from '@angular/router';
-
+import { CookieService } from 'ngx-cookie-service';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-home',
@@ -14,6 +15,7 @@ import { Router } from '@angular/router';
 export class HomePage implements OnInit {
   registerForm: FormGroup;
   submitted = false;
+  datas:any = [1,2,3,4,5,6,7,8,9,10]
   @ViewChild('slideWithNav', { static: false }) slideWithNav: IonSlides;
   sliderBanner:any = [];
   getProductCount:any = [];
@@ -23,7 +25,8 @@ export class HomePage implements OnInit {
   userDetailsAuth:any = {};
   userLogin:boolean = false;
   purchaseProduct:any = [];
-  constructor(private formBuilder: FormBuilder, private appService: AppserviceService, private router:Router) {
+  @ViewChild("sliderWidth", { static: false }) sliderWidth: ElementRef;
+  constructor(private cookieService: CookieService, private formBuilder: FormBuilder, private appService: AppserviceService, private router:Router) {
     let pr = JSON.parse(sessionStorage.getItem("getProductCount"));
     this.getUserAuth();
     if(pr){ 
@@ -31,7 +34,7 @@ export class HomePage implements OnInit {
     }
    }
    getUserAuth(){
-    let obj = JSON.parse(sessionStorage.getItem('userDetails'));
+    let obj = JSON.parse(this.cookieService.get('userDetails'));
     if(obj){ 
     this.userDetailsAuth = obj;
     console.log(this.userDetailsAuth);
@@ -47,6 +50,10 @@ export class HomePage implements OnInit {
       if(data){
         this.purchaseProduct = data;
         console.log(this.purchaseProduct);
+        this.widthContainer = this.purchaseProduct.length * 300;
+        this.getSliderInterval = setInterval(() =>{
+          this.getSliderPrev(1)
+        },6000)
       }
     })  
   }
@@ -95,8 +102,63 @@ export class HomePage implements OnInit {
     });
     this.getProducts();
     this.getUserDetails();
-
 }
+
+
+widthContainer:any;
+getSliderInterval:any;
+myStartFunction(){
+  this.getSliderInterval = setInterval(() =>{
+    this.getSliderPrev(1)
+  },6000)
+}
+
+myStopFunction() {
+  clearInterval(this.getSliderInterval);
+  console.log("mouse enter detected");
+}
+
+
+
+marginDataSet:any = {};
+tempcountSlider:number = 0;
+sliderWidthSet:number = 280;
+tempTrans:number;
+getSliderPrev(nos){
+if(nos == 1){
+  if(this.tempcountSlider <= this.datas.length - 4){
+    this.tempcountSlider = this.tempcountSlider + 1;
+    this.tempTrans = this.tempcountSlider * this.sliderWidthSet;
+    this.marginDataSet = {
+      '-ms-transform': 'translateX(-'+this.tempTrans+'px)',
+    'transform': 'translateX(-'+this.tempTrans+'px)'
+    };
+  }
+  else{
+      this.marginDataSet = {
+       '-ms-transform': 'translateX(0px)',
+      'transform': 'translateX(0px)'
+      };
+      this.tempcountSlider = 0;
+  }
+}
+else if (nos == 0){
+  if(this.tempcountSlider > 0){
+    this.tempTrans = this.tempTrans - this.sliderWidthSet;
+    this.tempcountSlider = this.tempcountSlider - 1;
+    this.marginDataSet = {
+      '-ms-transform': 'translateX(-'+this.tempTrans+'px)',
+    'transform': 'translateX(-'+this.tempTrans+'px)'
+    };
+  }
+}
+}
+
+
+
+
+
+
 productList:any = [];
 
 
@@ -106,6 +168,7 @@ getProducts(){
           this.productList = data;
           console.log(this.productList);
           this.getProductQuantity();
+          this.getWishlist();
         }
         this.getBannerSlider();
     });
@@ -233,7 +296,6 @@ getProductQuantity(){
   });
     });
   }
-  console.log(this.productList);
 }
 
 countClick(prid,count,nos){
@@ -272,6 +334,61 @@ openCount(prId){
     });
   })
   });
+}
+getWishlistData:any = [];
+getWishlist(){
+  this.appService.getWishlist(this.userDetailsAuth.id).subscribe(data =>{
+    console.log("data wishlist");
+    console.log(data);
+    this.getWishlistData = data;
+    this.productList.forEach(cat => {
+      cat.subcategory.forEach(subcat => {
+      subcat.product.forEach(product =>{
+        product.wishlist = false;
+        this.getWishlistData.forEach(wish =>{
+        if((product.productID == wish.productID) && (wish.customerID == this.userDetailsAuth.id)){
+          product.wishlist = true;
+          console.log(product);
+        }
+      });
+      });
+    });
+  });
+  })
+}
+
+
+addWishlist(id){
+  if(!this.userLogin){
+    console.log(id);
+    swal({
+      title: "Login Necessary",
+      type: 'warning',
+      showConfirmButton: true,
+      showCancelButton: false    
+    })
+    .then((willDelete) => {
+    });
+    return;
+  }
+  else{
+    let obj = {
+      productID:id,
+      customerID:this.userDetailsAuth.id
+    }
+    this.appService.postWishlist(obj).subscribe(data => {
+      console.log(data);
+      this.getWishlist();
+    })
+
+  } 
+}
+
+deleteWishlist(id){
+  this.appService.deleteWishlist(id).subscribe(data => {
+    console.log(data);
+    this.getWishlist();
+  })
 }
 
 

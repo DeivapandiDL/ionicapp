@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppserviceService } from 'src/app/services/appservice.service';
 import { Router, RouterModule, Routes } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 @Component({
   selector: 'app-order-history',
   templateUrl: './order-history.component.html',
@@ -13,8 +14,9 @@ export class OrderHistoryComponent implements OnInit {
   //   this.ngOnInit();
   // }
 
-  constructor(private appService:AppserviceService,private router:Router) {
-    let obj = JSON.parse(sessionStorage.getItem('userDetails'));
+  constructor(private appService:AppserviceService,private cookieService: CookieService,private router:Router) {
+    // let obj = JSON.parse(sessionStorage.getItem('userDetails'));
+    let obj = JSON.parse(this.cookieService.get('userDetails'));
   console.log('object details:::::',obj);
   this.custDetails.push(obj);
    }

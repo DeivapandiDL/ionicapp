@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterModule, Routes } from '@angular/router';
+import { Router } from '@angular/router';
 import { AppserviceService } from 'src/app/services/appservice.service';
-
+import { CookieService } from 'ngx-cookie-service';
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -15,18 +15,19 @@ export class MenuComponent implements OnInit {
       title: "Home",
       url: "/home",
       id:""
-    },
-    // {
-    //   title: "Login",
-    //   url: "/login",
-    //   id:""
-    // }
+    }
     
   ];
   isItemAvailable = false;
   items = [];
-  constructor(private router:Router,private appService:AppserviceService) { 
+  tempCountSet:any = [];
+  constructor(private router:Router,private cookieService:CookieService,private appService:AppserviceService) { 
     this.getUserAuth();
+    let temp = JSON.parse(sessionStorage.getItem("getProductCount"));
+    if(temp){
+      this.tempCountSet = temp;
+    }
+    console.log(this.tempCountSet);
   }
   menuItem:any = [];
   getProductCount:any = [];
@@ -84,14 +85,23 @@ export class MenuComponent implements OnInit {
       });
       this.getProductCountDetails();
       this.getCart();
-      console.log(this.loginCred);
   }
   closeDropdown(){
     this.profileDropdown = false;
   }
 
+  toggleLoginMenu() {
+    this.profileDropdown = !this.profileDropdown;
+  }
+
+  toggleDropdownCheckout(){
+    this.showDropdown = !this.showDropdown;
+  }
+
 getUserAuth(){
-  let obj = JSON.parse(sessionStorage.getItem('userDetails'));
+  // let obj = JSON.parse(sessionStorage.getItem('userDetails'));
+  let obj = JSON.parse(this.cookieService.get('userDetails'));
+  console.log(this.cookieService.get('userDetails'))
   if(obj){ 
   this.userDetailsAuth = obj;
   console.log(this.userDetailsAuth);
@@ -102,8 +112,13 @@ getUserAuth(){
   if(Object.keys(this.userDetailsAuth).length > 0){
     this.loginCred = this.userDetailsAuth.name;
   }
+  
 }
 }
+
+
+
+
 
 logout(){
   this.profileDropdown = false;
@@ -130,7 +145,7 @@ getCart(){
       console.log(this.getProductCount);
     }
     else{
-      let datacount = JSON.parse(sessionStorage.getItem("getProductCount"));
+      let datacount = this.tempCountSet;
       if(datacount){ 
       this.getProductCount = datacount;
       this.count = this.getProductCount.map(a => a.count).reduce(function(a, b)
@@ -139,8 +154,24 @@ getCart(){
         });
       }
     }
-    console.log(this.count);
-    console.log(this.getProductCount);
+    let tempCountPrice = []
+    this.productList.forEach(element => {
+      this.getProductCount.forEach(count => {
+        if(element.productID == count.productId)  
+        {
+          element.quantity = count.count;
+          element.productTotalRate = element.productRate * element.quantity;
+          tempCountPrice.push(element)
+        }
+      });
+    });
+
+    this.totalPrice = tempCountPrice.map(a => a.productTotalRate).reduce(function(a, b)
+        {
+          return a + b;
+        });
+        console.log(this.totalPrice);
+
   }
 
   getCategory(){
@@ -255,8 +286,6 @@ getCart(){
 
   tempcountCart:any = [];
   countClick(cart,nos){
-    console.log(cart.productID);
-    console.log(nos);
     if(nos == 0){ 
     if(cart.quantity > 1){
       cart.quantity = cart.quantity - 1;

@@ -1,11 +1,4 @@
 <div class="paddTop">
-    <!-- <section class="Banner">
-        <div class="container">
-            <div class="row">
-                <h2 class="col-md-12">Checkout</h2>
-            </div>
-        </div>
-    </section> -->
     <div class="container">
         <div class="row">
             <div class="permaLink"><a routerLink="/home">Home</a>
@@ -41,7 +34,15 @@
                                 <img class="checkoutProduct" *ngIf="data.imgURL && data.imgURL != '' " src="../../assets/images/{{data.categoryID}}/{{data.imgURL}}">
                             </td>
                             <td>{{data.productName}}</td>
-                            <td>{{data.quantity}}</td>
+                            <td>
+                                <div class="cartDatas">
+                                    <div class="countCart">
+                                        <button (click)="countClick(data,0)">-</button>
+                                        <input type="text" class="text-center" value="{{data.quantity}}">
+                                        <button (click)="countClick(data,1)">+</button>
+                                    </div>
+                                </div>
+                            </td>
                             <td>{{data.productRate}} {{data.productRateSymbol}}</td>
                             <td>{{data.productTotalRate}} {{data.productRateSymbol}}</td>
                         </tr>

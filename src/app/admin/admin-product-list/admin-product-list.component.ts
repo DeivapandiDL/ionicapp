@@ -75,6 +75,9 @@ refreshProduct(){
 
 EditProduct(id){
 this.appService.adminProductId = id;
-this.router.navigate(['/admin/EditProduct']);
+setTimeout(() => {
+  this.router.navigate(['/admin/EditProduct']);
+},100);
+
 }
 }

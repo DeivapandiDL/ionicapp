@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { HomePageRoutingModule } from './home-routing.module';
 import { TooltipModule } from 'ng2-tooltip-directive';
-
+import { CookieService } from 'ngx-cookie-service';
 import { HomePage } from './home.page';
 
 @NgModule({
@@ -17,6 +17,7 @@ import { HomePage } from './home.page';
     HomePageRoutingModule,
     TooltipModule
   ],
-  declarations: [HomePage]
+  declarations: [HomePage],
+  providers: [CookieService]
 })
 export class HomePageModule {}

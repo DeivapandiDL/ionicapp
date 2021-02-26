@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, throwError,BehaviorSubject } from 'rxjs';
 import { Router, RouterModule, Routes,NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { CookieService } from 'ngx-cookie-service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -21,7 +22,7 @@ export class LoginPage implements OnInit {
     customer:any={};
 
 
-  constructor(private router:Router,private http:HttpClient,private formBuilder: FormBuilder,private appService:AppserviceService) {
+  constructor(private router:Router,private cookieService:CookieService,private http:HttpClient,private formBuilder: FormBuilder,private appService:AppserviceService) {
     this.router.events.pipe(
         filter((event) => event instanceof NavigationEnd)
       ).subscribe((event: NavigationEnd) => {
@@ -65,7 +66,8 @@ export class LoginPage implements OnInit {
                 this.loginCredentials = data;
                 if(this.loginCredentials.length > 0){
                     this.appService.userAuth(this.loginCredentials[0]);
-                    sessionStorage.setItem('userDetails',JSON.stringify(this.loginCredentials[0]));
+                    // sessionStorage.setItem('userDetails',JSON.stringify(this.loginCredentials[0]));
+                    this.cookieService.set('userDetails',JSON.stringify(this.loginCredentials[0]));
                     this.router.navigate(['/home']);
                 }
                 else{

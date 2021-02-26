@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FilterPipe } from '../app/search-pipe/filter.pipe';
 import { NgxPaginationModule } from 'ngx-pagination';
-
+import { ClickOutsideDirective } from 'src/app/outsideclick.directive';
 import { AppserviceService } from 'src/app/services/appservice.service';
 
 import { AppComponent } from './app.component';
@@ -18,7 +18,7 @@ import { MenuComponent } from './shared/menu/menu.component';
 import { FooterComponent } from './shared/footer/footer.component';
 
 @NgModule({
-  declarations: [AppComponent,MenuComponent,FilterPipe,FooterComponent],
+  declarations: [AppComponent,MenuComponent,FilterPipe,FooterComponent,ClickOutsideDirective],
   entryComponents: [],
   imports: [BrowserModule,CommonModule, IonicModule.forRoot(), 
     AppRoutingModule,ReactiveFormsModule,FormsModule,HttpClientModule,NgxPaginationModule],
