@@ -1,0 +1,99 @@
+<div class="paddTop">
+    <div class="container">
+        <div class="row">
+            <div class="permaLink"><a routerLink="/home">Home</a>
+                <ion-icon name="arrow-forward"></ion-icon> <a routerLink="/admin/AdminProductList">Products</a>
+                <ion-icon name="arrow-forward"></ion-icon>Add New Sub Category<span></span>
+            </div>
+        </div>
+    </div>
+    <section>
+        <div class="container maxLogin">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card m-3">
+                        <h5 class="card-header highlight text-center">Add New Sub Category</h5>
+                        <div class=" card-body">
+                            <form class="container">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Category Name <span class="star">*</span></label>
+                                            <select class="form-control" (change)="getCatId()" [ngModelOptions]="{standalone: true}" [(ngModel)]="catID" [ngClass]="{ 'is-invalid': submitted && f.categoryID.errors }">
+                                              <option value="">Select</option>
+                                              <option [value]="cat.catID" *ngFor="let cat of categoryList">{{cat.catName}}</option>
+                                            </select>
+                                            <div class="invalid-feedback dpBlk" *ngIf="catBoolean">
+                                                Category Name is Required
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Sub Category Name <span class="star">*</span></label>
+                                            <input type="text" (keyup)="getSubCatName()" [(ngModel)]="subCatName" [ngModelOptions]="{standalone: true}" maxlength="30" class="form-control" />
+                                            <div class="invalid-feedback dpBlk" *ngIf="subCatBoolean">
+                                                Sub Category Name is Required
+                                            </div>
+                                            <div class="invalid-feedback dpBlk" *ngIf="catAlreadyExistBoolean">
+                                                This Sub Category Name is already Exist.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <button class="btn btn-danger btn-sm mr-1" (click)="subcategorySubmit()">Add Category</button>
+                                        <button class="btn btn-secondary btn-sm" type="reset" (click)="onReset()">Cancel</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <a><img src="../../../assets/images/logo.png"></a>
+
+                </div>
+                <div class="col-md-3">
+                    <h4 class="highlight">STAY CONNECTED</h4>
+                    <p>Chenithra Technologies Private Limited, Madipakkam, Ponniamman kovil street, Chennai, 560103, Tamil Nadu, India</p>
+                    <p>Call - 044-4201023</p>
+                    <p>Mail - info@chenithra.com</p>
+                </div>
+                <div class="col-md-3">
+                    <h4 class="highlight">CONTACT</h4>
+                    <p>Facebook</p>
+                    <p>Twitter</p>
+                    <p>Yaaho</p>
+                    <p>Youtube</p>
+                </div>
+                <div class="col-md-3">
+                    <h4 class="highlight">POLICY</h4>
+                    <p>Return Policy</p>
+                    <p>Terms of Use</p>
+                    <p>Security</p>
+                    <p>Privacy</p>
+                    <p>Sitemap</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="btmFooter">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    2021 Chenithra Technologies Pvt Ltd. All Rights Reserved.
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

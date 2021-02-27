@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { AppserviceService } from 'src/app/services/appservice.service';
 import { Router } from '@angular/router';
-
+import { CookieService } from 'ngx-cookie-service';
 @Component({
   selector: 'app-editproduct',
   templateUrl: './editproduct.component.html',
@@ -14,7 +14,7 @@ export class EditproductComponent implements OnInit {
   submitted = false;
   getProduct:any = {};
   uploadedFiles: Array < File > ;
-  constructor(private formBuilder: FormBuilder,private router:Router,private http:HttpClient, private appservice:AppserviceService) { }
+  constructor(private cookieService:CookieService,private formBuilder: FormBuilder,private router:Router,private http:HttpClient, private appservice:AppserviceService) { }
 
   ngOnInit() {
     if(this.appservice.adminProductId != ''){

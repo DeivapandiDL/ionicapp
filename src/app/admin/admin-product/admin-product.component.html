@@ -19,11 +19,12 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Select Category <span class="star">*</span></label>
+                                            <label class="btnCategoryAdd"><span>Select Category <span class="star">*</span></span>
+                                                <a (click)="createNewCategory()" class="btn btn-sm btn-danger">Add New Category</a></label>
                                             <select formControlName="categoryID" (change)="catSelect($event)" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.categoryID.errors }">
-                                        <option value="">Select</option>
-                                        <option [value]="cat.catID" *ngFor="let cat of catList">{{cat.catName}}</option>
-                                    </select>
+                                                        <option value="">Select</option>
+                                                        <option [value]="cat.catID" *ngFor="let cat of catList">{{cat.catName}}</option>
+                                                    </select>
                                             <div *ngIf="submitted && f.categoryID.errors" class="invalid-feedback">
                                                 <div *ngIf="f.categoryID.errors.required">Category is required</div>
                                             </div>
@@ -33,7 +34,8 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Select Sub Category <span class="star">*</span></label>
+                                            <label class="btnCategoryAdd"><span>Select Sub Category <span class="star">*</span></span>
+                                                <a (click)="createNewSubCategory()" class="btn btn-sm btn-danger">Add New Sub Category</a></label>
                                             <select formControlName="subcategoryID" [disabled]="subTempBoolean" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.subcategoryID.errors }">
                                       <option value=""></option>
                                       <option [value]="subcat.subCatID" *ngFor="let subcat of subTemp">{{subcat.subCatName}}</option>
@@ -86,10 +88,10 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Expire Date<span class="star">*</span></label>
-                                            <input type="text" formControlName="expiryDate" class="form-control">
-                                            <ejs-datepicker></ejs-datepicker>
+                                            <!-- <input type="text" formControlName="expiryDate" class="form-control"> -->
                                             <!-- <dp-date-picker theme="dp-material" class="pickerControl" [config]="datePickerConfig" formControlName="expiryDate" required="true" [ngClass]="{ 'is-invalid': submitted && f.expiryDate.errors }">
                                             </dp-date-picker> -->
+                                            <my-date-picker name="mydate" class="form-control" [options]="myDatePickerOptions" formControlName="expiryDate" (dateChanged)="onDateChanged($event)"></my-date-picker>
                                             <div *ngIf="submitted && f.expiryDate.errors" class="invalid-feedback">
                                                 <div *ngIf="f.expiryDate.errors.required">Expire Date required</div>
                                             </div>
@@ -119,7 +121,8 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="3 / 3" [resizeToWidth]="270" format="png" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()"></image-cropper>
+                                        <image-cropper [imageChangedEvent]="imageChangedEvent" [resizeToWidth]="150" [maintainAspectRatio]="true" [aspectRatio]="3 / 3" [resizeToWidth]="270" format="png" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()"
+                                            (loadImageFailed)="loadImageFailed()" [imageBase64]="imageBase64String"></image-cropper>
                                         <img [src]="croppedImage" />
                                         <!-- <img width="100%" class="image imgPreview" *ngIf="imageUrl != ''" [src]="imageUrl"> -->
                                     </div>

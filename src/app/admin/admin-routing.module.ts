@@ -6,10 +6,20 @@ import { AdminProductComponent } from './admin-product/admin-product.component';
 import { AdminProductListComponent } from './admin-product-list/admin-product-list.component';
 import { CustomerListComponent } from './customer-list/customer-list.component';
 import { EditproductComponent } from './editproduct/editproduct.component';
+import { CreateCategoryComponent } from './create-category/create-category.component';
+import { CreateSubCategoryComponent } from './create-sub-category/create-sub-category.component';
 const routes: Routes = [
   {
     path: '',
     component: AdminPage,
+  },
+  {
+    path:'createcategory',
+    component:CreateCategoryComponent
+  },
+  {
+    path:'createsubcategory',
+    component:CreateSubCategoryComponent
   },
   {
     path: 'addProduct',

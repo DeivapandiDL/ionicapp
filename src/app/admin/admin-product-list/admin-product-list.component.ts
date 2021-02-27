@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppserviceService } from 'src/app/services/appservice.service';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-admin-product-list',
@@ -10,7 +11,7 @@ import swal from 'sweetalert2';
 })
 export class AdminProductListComponent implements OnInit {
 
-  constructor(private appService: AppserviceService,private router:Router) { }
+  constructor(private cookieService:CookieService,private appService: AppserviceService,private router:Router) { }
   getProducts:any = [];
   ngOnInit() {
     this.getProductList();

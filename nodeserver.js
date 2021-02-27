@@ -436,6 +436,38 @@ app.get('/getWishlist/:id', (req, res) => {
 
 
 
+// create category
+
+app.post('/createCategory', (req, res) => {
+    const val = req.body;
+    console.log(val.catName);
+    var sql= "INSERT INTO category (catName) VALUES (?)";
+    mysqlConnection.query(sql,[val.catName] , (err, rows, fields) => {
+        if (!err){
+            res.send("true");
+        }
+        else
+            console.log(err);
+    });
+});
+
+
+
+// create sub category
+
+app.post('/createSubCategory', (req, res) => {
+    const val = req.body;
+    console.log(val.catName);
+    var sql= "INSERT INTO subcategory (catID,subCatName) VALUES (?,?)";
+    mysqlConnection.query(sql,[val.catID,val.subCatName] , (err, rows, fields) => {
+        if (!err){
+            res.send("true");
+        }
+        else
+            console.log(err);
+    });
+});
+
 
 
 

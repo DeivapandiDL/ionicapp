@@ -86,6 +86,26 @@ getCategoryList(){
   )
 }
 
+
+createCategory(item){
+  return this.http
+    .post<[]>(this.base_path+'createCategory/', JSON.stringify(item), this.httpOptions)
+    .pipe(
+      retry(2),
+      catchError(this.handleError)
+    )
+}
+
+
+createSubCategory(item){
+  return this.http
+    .post<[]>(this.base_path+'createSubCategory/', JSON.stringify(item), this.httpOptions)
+    .pipe(
+      retry(2),
+      catchError(this.handleError)
+    )
+}
+
 getSubCategory(){
   return this.http.get(this.base_path+'getSubCategory').pipe(
     retry(2),

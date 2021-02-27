@@ -53,7 +53,9 @@
                                                     </a>
                                                     <a class="ProductClick" (click)="gotoProductDesc(products.productName,products.productID)">
                                                         <img *ngIf="products.productImage == '' " src="../../assets/images/product/1.jpg">
-                                                        <img *ngIf="products.productImage != '' " src="../../assets/images/{{products.categoryID}}/{{products.productImage}}">
+                                                        <!-- <img *ngIf="products.productImage != '' " src="../../assets/images/{{products.categoryID}}/{{products.productImage}}"> -->
+                                                        <img *ngIf="products.productImage != '' " src="{{products.productImage}}">
+
                                                     </a>
                                                     <div class="productDesc">
                                                         <div class="descProduct">

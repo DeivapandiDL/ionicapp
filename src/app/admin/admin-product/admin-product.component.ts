@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { AppserviceService } from 'src/app/services/appservice.service';
 import { Router } from '@angular/router';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { DomSanitizer } from '@angular/platform-browser';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-admin-product',
@@ -13,19 +15,23 @@ import { ImageCroppedEvent } from 'ngx-image-cropper';
 export class AdminProductComponent implements OnInit {
 
   registerProduct: FormGroup;
+  myDatePickerOptions: any;
   submitted = false;
   getProduct:any = {};
   uploadedFiles: Array < File > ;
-  constructor(private formBuilder: FormBuilder,private router:Router,private http:HttpClient, private appservice:AppserviceService) { }
+  constructor(private cookieService:CookieService,private formBuilder: FormBuilder,private router:Router,private http:HttpClient, private appservice:AppserviceService) { }
   imageChangedEvent: any = '';
   croppedImage: any = '';
+  cropperHeight: any = ''; cropperWidth: any = '';
 
   fileChangeEvent(event: any): void {
       this.imageChangedEvent = event;
   }
   imageCropped(event: ImageCroppedEvent) {
       this.croppedImage = event.base64;
-      console.log(this.croppedImage);
+      this.cropperHeight = event.height;
+    this.cropperWidth = event.width;
+      console.log(this.cropperWidth);
       
   }
   imageLoaded(image: HTMLImageElement) {
@@ -38,6 +44,9 @@ export class AdminProductComponent implements OnInit {
       // show message
   }
   ngOnInit() {
+    this.myDatePickerOptions = {
+      dateFormat: 'dd-mm-yyyy'
+    }
     if(this.appservice.adminProductId != ''){
       this.getProductEdit(this.appservice.adminProductId);
     }
@@ -184,6 +193,17 @@ cat='';
       this.onReset();
      }
  
+     createNewCategory(){
+      this.router.navigate(['admin/createcategory']);
+     }
+
+     createNewSubCategory(){
+      this.router.navigate(['admin/createsubcategory']);
+     }
+
+
+
+
      onReset() {
          this.submitted = false;
          this.registerProduct.reset();
