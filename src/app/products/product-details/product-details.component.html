@@ -13,7 +13,9 @@
                 <div class="col-md-6">
                     <div class="card">
                         <img *ngIf="getProductList.productImage == '' " src="../../assets/images/product/1.jpg">
-                        <img *ngIf="getProductList.productImage != '' " src="../../assets/images/{{getProductList.categoryID}}/{{getProductList.productImage}}">
+                        <!-- <img *ngIf="getProductList.productImage != '' " src="../../assets/images/{{getProductList.categoryID}}/{{getProductList.productImage}}"> -->
+                        <img *ngIf="getProductList.productImage != '' " src="{{getProductList.productImage}}">
+
                     </div>
                 </div>
                 <div class="col-md-6">

@@ -26,6 +26,7 @@ export class AdminProductComponent implements OnInit {
   imageCropped(event: ImageCroppedEvent) {
       this.croppedImage = event.base64;
       console.log(this.croppedImage);
+      
   }
   imageLoaded(image: HTMLImageElement) {
       // show cropper
@@ -170,8 +171,8 @@ cat='';
              return;
          } 
          // display form values on success
-         this.registerProduct.value.productImage='';
-        //  this.registerProduct.value.image = this.croppedImage;
+        //  this.registerProduct.value.productImage='';
+         this.registerProduct.value.productImage = this.croppedImage;
          this.appservice.getAddProductDetails(this.registerProduct.value).subscribe(data => {
           console.log('product details:::',data);
           console.log('product values',this.registerProduct.value);

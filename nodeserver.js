@@ -546,7 +546,7 @@ var uploadImage='';
 
 app.post('/addNewProduct', (req, res) => {
  
-console.log('details',uploadImage,req.body);
+console.log('details::::',req.body);
 const val = req.body;
 // var dir = './pdtImagesUploads/'+val.productImage;
 // imagesave='./src/assets/images/'+val.categoryID;
@@ -570,43 +570,43 @@ const val = req.body;
 
 
        
-    // var sql= "INSERT INTO addproduct ( categoryID,subcategoryID,productName,productImage,productCount,productDescription,productRateSymbol,productRate,productOfferPercent,expiryDate) VALUES (?,?,?,?,?,?,?,?,?,?)";
+    var sql= "INSERT INTO addproduct ( categoryID,subcategoryID,productName,productImage,productCount,productDescription,productRateSymbol,productRate,productOfferPercent,expiryDate) VALUES (?,?,?,?,?,?,?,?,?,?)";
 
-    // mysqlConnection.query(sql,[val.categoryID,val.subcategoryID,val.productName,file,val.productCount,val.productDescription,val.productRateSymbol,val.productRate,val.productOfferPercent,val.expiryDate] , (err, rows, fields) => {
-    //     if (!err){
-    //         // res.write("product added successfully");
-    //         console.log(val.expiryDate);
-    //         res.send('true');
-    //         let transport = nodemailer.createTransport({
-    //         // host: 'smtp.gmail.com',
-    //         // port: 587,
-    //         service:'gmail',
-    //         auth: {
-    //            user: 'facteuronline@gmail.com',
-    //            pass: 'Facteur@123'
-    //         }
-    //     });
-    //     const message = {
-    //         from: 'facteuronline@gmail.com', // Sender address
-    //         to: 'facteuronline@gmail.com',         // List of recipients
-    //         subject: 'Goatoo Product Added '+val.productName+' Successfully', // Subject line
-    //         text: 'Goatoo Product Added Successfully', // Plain text body
-    //         html: '<table style="width:100%"  border = "1" cellpadding = "5" cellspacing = "5"><caption><h3>Product Details</h3></caption><tr> <th>Product Name</th><th>Product Count</th><th>Product Description</th><th>Product RateSymbol</th><th>Product Rate</th><th>Product OfferPercent</th></tr><tr><td>'+val.productName+'</td><td>'+val.productCount+'</td><td>'+val.productDescription+'</td><td>'+val.productRateSymbol+'</td><td>'+val.productRate+'</td><td>'+val.productOfferPercent+'</td></tr></table>'
+    mysqlConnection.query(sql,[val.categoryID,val.subcategoryID,val.productName,val.productImage,val.productCount,val.productDescription,val.productRateSymbol,val.productRate,val.productOfferPercent,val.expiryDate] , (err, rows, fields) => {
+        if (!err){
+            // res.write("product added successfully");
+            console.log(val.expiryDate);
+            res.send('true');
+            let transport = nodemailer.createTransport({
+            // host: 'smtp.gmail.com',
+            // port: 587,
+            service:'gmail',
+            auth: {
+               user: 'facteuronline@gmail.com',
+               pass: 'Facteur@123'
+            }
+        });
+        const message = {
+            from: 'facteuronline@gmail.com', // Sender address
+            to: 'facteuronline@gmail.com',         // List of recipients
+            subject: 'Goatoo Product Added '+val.productName+' Successfully', // Subject line
+            text: 'Goatoo Product Added Successfully', // Plain text body
+            html: '<table style="width:100%"  border = "1" cellpadding = "5" cellspacing = "5"><caption><h3>Product Details</h3></caption><tr> <th>Product Name</th><th>Product Count</th><th>Product Description</th><th>Product RateSymbol</th><th>Product Rate</th><th>Product OfferPercent</th></tr><tr><td>'+val.productName+'</td><td>'+val.productCount+'</td><td>'+val.productDescription+'</td><td>'+val.productRateSymbol+'</td><td>'+val.productRate+'</td><td>'+val.productOfferPercent+'</td></tr></table>'
 
 
-    //     };
-    //     transport.sendMail(message, function(err, info) {
-    //         if (err) {
-    //           console.log(err)
-    //         } else {
-    //           console.log(info);
-    //         }
-    //     });
+        };
+        transport.sendMail(message, function(err, info) {
+            if (err) {
+              console.log(err)
+            } else {
+              console.log(info);
+            }
+        });
 
-    //     }
-    //     else
-    //         console.log('error',err);
-    // });
+        }
+        else
+            console.log('error',err);
+    });
     
 
 
