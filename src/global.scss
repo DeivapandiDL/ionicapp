@@ -357,3 +357,38 @@ table td p {
 .sliderPrevNext.next {
     right: 0
 }
+
+.offerPriceCrash {
+    position: relative;
+    opacity: 0.7;
+}
+
+.offerPriceCrash::before {
+    content: "";
+    position: absolute;
+    background: #333;
+    top: calc(50% - 1px);
+    width: 100%;
+    height: 1px;
+}
+
+.offerPrice {
+    display: flex;
+    width: 100%;
+}
+
+span.priceOfferGreen {
+    font-weight: 500;
+}
+
+.offerPrice * {
+    margin-right: 12px;
+}
+
+.offerPrice .per {
+    color: #008000
+}
+
+.priceGrid {
+    margin-top: 16px;
+}

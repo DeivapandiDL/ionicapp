@@ -13,10 +13,12 @@ import { CustomerListComponent } from './customer-list/customer-list.component';
 import { EditproductComponent } from './editproduct/editproduct.component';
 import { CreateCategoryComponent } from './create-category/create-category.component';
 import { CreateSubCategoryComponent } from './create-sub-category/create-sub-category.component';
+import { MailerComponent } from './mailer/mailer.component';
 import { AdminPage } from './admin.page';
-// import { MyDatePickerModule } from 'mydatepicker';
 // import { BrowserModule } from '@angular/platform-browser';
+import { AngularMyDatePickerModule } from 'angular-mydatepicker';
 import { CookieService } from 'ngx-cookie-service';
+
 
 @NgModule({
   imports: [
@@ -28,6 +30,7 @@ import { CookieService } from 'ngx-cookie-service';
     ReactiveFormsModule,
     NgxPaginationModule,
     TooltipModule,
+    AngularMyDatePickerModule,
     ImageCropperModule
   ],
   declarations: [
@@ -37,6 +40,7 @@ import { CookieService } from 'ngx-cookie-service';
     FilterPipe,
     CreateCategoryComponent,
     EditproductComponent,
+    MailerComponent,
     CreateSubCategoryComponent,
     CustomerListComponent],
   providers: [CookieService]

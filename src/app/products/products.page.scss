@@ -168,6 +168,10 @@ button.listView.btActive {
     object-fit: cover;
 }
 
+.listViews .ProductClick img {
+    height: auto
+}
+
 .noProduct {
     min-height: 200px;
     align-items: center;

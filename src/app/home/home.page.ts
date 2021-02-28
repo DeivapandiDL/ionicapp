@@ -126,7 +126,7 @@ sliderWidthSet:number = 280;
 tempTrans:number;
 getSliderPrev(nos){
 if(nos == 1){
-  if(this.tempcountSlider <= this.datas.length - 4){
+  if(this.tempcountSlider <= this.purchaseProduct.length - 4){
     this.tempcountSlider = this.tempcountSlider + 1;
     this.tempTrans = this.tempcountSlider * this.sliderWidthSet;
     this.marginDataSet = {
@@ -348,6 +348,7 @@ getWishlist(){
         this.getWishlistData.forEach(wish =>{
         if((product.productID == wish.productID) && (wish.customerID == this.userDetailsAuth.id)){
           product.wishlist = true;
+          debugger;
           console.log(product);
         }
       });

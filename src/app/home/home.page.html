@@ -38,25 +38,30 @@
                                             <img *ngIf="products.productImage != '' " src="{{products.productImage}}">
                                             <!-- <img *ngIf="products.productImage != '' " src="../../assets/images/{{products.categoryID}}/{{products.productImage}}"> -->
                                         </a>
-                                        <div class="productDesc">
+                                        <div class="productDesc" (click)="gotoProductDesc(products.productName,products.productID)">
                                             <h4 class="truncText" tooltip="{{products.productName}}">{{products.productName}}</h4>
                                             <div class="descProduct">
                                                 {{products.productDescription | slice:0:50}}... </div>
-                                            <div class="fewLeftproduct" *ngIf="products.productCount < 4 && products.productCount > 0">
-                                                ! hurry few left
-                                            </div>
-                                            <div class="outStackproduct" *ngIf="products.productCount == 0">
-                                                Out of Stock
-                                            </div>
                                             <div class="priceGrid">
-                                                <span class="price">{{products.productRateSymbol}} {{products.productRate}}</span>
+                                                <div class="fewLeftproduct" *ngIf="products.productCount < 4 && products.productCount > 0">
+                                                    ! hurry few left
+                                                </div>
+                                                <div class="outStackproduct" *ngIf="products.productCount == 0">
+                                                    Out of Stock
+                                                </div>
+                                                <span class="price" *ngIf="!products.productOfferPercent || products.productOfferPercent == 0">{{products.productRateSymbol}} {{products.productRate}}</span>
+                                                <span class="offerPrice" *ngIf="products.productOfferPercent && products.productOfferPercent > 0"> 
+                                                    <span class="offerPriceCrash"> {{products.productRateSymbol}}{{products.productRate}}</span>
+                                                <span class="per"> {{products.productOfferPercent}}% off </span>
+                                                <span class="priceOfferGreen"> {{products.productRateSymbol}}{{(products.productRate - (products.productOfferPercent * products.productRate / 100)).toFixed(0)}}</span>
+                                                </span>
                                                 <!-- <div class="countCart" *ngIf="products.quantityBool">
                                                     <button (click)="countClick(products.productID,products.quantity,0)">-</button>
                                                     <input type="text" class="text-center" [ngModel]="products.quantity">
                                                     <button (click)="countClick(products.productID,products.quantity,1)">+</button>
                                                 </div> -->
                                                 <!-- <button *ngIf="!products.quantityBool" class="btn btn-danger btn-sm" (click)="openCount(products.productID)">ADD TO CART</button> -->
-                                                <button class="btn btn-danger btn-sm" (click)="gotoProductDesc(products.productName,products.productID)">ADD TO CART</button>
+                                                <!-- <button class="btn btn-danger btn-sm" (click)="gotoProductDesc(products.productName,products.productID)">ADD TO CART</button> -->
 
                                             </div>
                                         </div>
@@ -80,7 +85,7 @@
             <div class="row">
                 <div class="col-md-12 relativeClass" (mouseenter)="myStopFunction()" (mouseleave)="myStartFunction()">
                     <a class="sliderPrevNext prev" (click)="getSliderPrev(0)">
-                        <</a>   
+                        <</a>
                             <ng-container>
                                 <div class="slideGrid">
                                     <div class="sliderContainer" #sliderWidth [ngStyle]="marginDataSet" [style.width.px]="widthContainer">
@@ -88,15 +93,15 @@
                                             <div class="gridProduct">
                                                 <a class="ProductClick">
                                                     <img *ngIf="products.productImage == '' " src="../../assets/images/product/1.jpg">
-                                                    <img *ngIf="products.productImage != '' " src="../../assets/images/{{products.categoryID}}/{{products.productImage}}">
+                                                    <img *ngIf="products.productImage != '' " src="{{products.productImage}}">
                                                 </a>
-                                                <div class="productDesc">
+                                                <div class="productDesc" (click)="gotoProductDesc(products.productName,products.productID)">
                                                     <h4 class="truncText">{{products.productName}}</h4>
                                                     <div class="descProduct" tooltip="{{products.productDesc}}">
                                                         {{products.productDesc | slice:0:50}}... </div>
                                                     <div class="priceGrid">
                                                         <span class="price">$ {{products.productPrice}}</span>
-                                                        <button class="btn btn-danger btn-sm" (click)="gotoProductDesc(products.productName,products.productID)">ADD TO CART</button>
+                                                        <!-- <button class="btn btn-danger btn-sm" (click)="gotoProductDesc(products.productName,products.productID)">ADD TO CART</button> -->
                                                     </div>
                                                 </div>
                                             </div>

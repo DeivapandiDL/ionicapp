@@ -89,9 +89,9 @@
                                         <div class="form-group">
                                             <label>Expire Date<span class="star">*</span></label>
                                             <!-- <input type="text" formControlName="expiryDate" class="form-control"> -->
-                                            <!-- <dp-date-picker theme="dp-material" class="pickerControl" [config]="datePickerConfig" formControlName="expiryDate" required="true" [ngClass]="{ 'is-invalid': submitted && f.expiryDate.errors }">
-                                            </dp-date-picker> -->
-                                            <my-date-picker name="mydate" class="form-control" [options]="myDatePickerOptions" formControlName="expiryDate" (dateChanged)="onDateChanged($event)"></my-date-picker>
+                                            <div class="input-box-container">
+                                                <input class="input-box form-control" [min]="minDate" angular-mydatepicker name="mydate" (click)="dp.toggleCalendar()" [(ngModel)]="model" [options]="myDpOptions" formControlName="expiryDate" #dp="angular-mydatepicker" />
+                                            </div>
                                             <div *ngIf="submitted && f.expiryDate.errors" class="invalid-feedback">
                                                 <div *ngIf="f.expiryDate.errors.required">Expire Date required</div>
                                             </div>
@@ -121,8 +121,9 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <image-cropper [imageChangedEvent]="imageChangedEvent" [resizeToWidth]="150" [maintainAspectRatio]="true" [aspectRatio]="3 / 3" [resizeToWidth]="270" format="png" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()"
+                                        <image-cropper [imageChangedEvent]="imageChangedEvent" [resizeToWidth]="150" [maintainAspectRatio]="true" [aspectRatio]="3 / 3" [resizeToHeight]="150" format="png" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()"
                                             (loadImageFailed)="loadImageFailed()" [imageBase64]="imageBase64String"></image-cropper>
+                                        <!-- <button type="button" class="btn btn-sm btn-primary" (click)="crop()">Crop</button> -->
                                         <img [src]="croppedImage" />
                                         <!-- <img width="100%" class="image imgPreview" *ngIf="imageUrl != ''" [src]="imageUrl"> -->
                                     </div>

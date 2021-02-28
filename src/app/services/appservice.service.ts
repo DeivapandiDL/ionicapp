@@ -186,6 +186,14 @@ addCart(data){
 }
 
 
+getRelatedProducts(id){
+  return this.http.get(this.base_path+'getRelatedProductsList/'+id).pipe(
+    retry(2),
+    catchError(this.handleError)
+  )
+}
+
+
 getLoginDetails(data){
   var headers = new HttpHeaders();
   headers.append('Access-Control-Allow-Origin' , '*');

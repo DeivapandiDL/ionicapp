@@ -57,7 +57,7 @@
                                                         <img *ngIf="products.productImage != '' " src="{{products.productImage}}">
 
                                                     </a>
-                                                    <div class="productDesc">
+                                                    <div class="productDesc" (click)="gotoProductDesc(products.productName,products.productID)">
                                                         <div class="descProduct">
                                                             <h4 tooltip="{{products.productName}}">{{products.productName}}</h4>
                                                             <p>{{products.productDescription | slice:0:50}}...</p>
@@ -69,14 +69,26 @@
                                                             Out of Stock
                                                         </div>
                                                         <div class="priceGrid">
-                                                            <span class="price">{{products.productRateSymbol}} {{products.productRate}}</span>
+                                                            <div class="fewLeftproduct" *ngIf="products.productCount < 4 && products.productCount > 0">
+                                                                ! hurry few left
+                                                            </div>
+                                                            <div class="outStackproduct" *ngIf="products.productCount == 0">
+                                                                Out of Stock
+                                                            </div>
+                                                            <span class="price" *ngIf="!products.productOfferPercent || products.productOfferPercent == 0">{{products.productRateSymbol}} {{products.productRate}}</span>
+                                                            <span class="offerPrice" *ngIf="products.productOfferPercent && products.productOfferPercent > 0"> 
+                                                                <span class="offerPriceCrash"> {{products.productRateSymbol}}{{products.productRate}}</span>
+                                                            <span class="per"> {{products.productOfferPercent}}% off </span>
+                                                            <span class="priceOfferGreen"> {{products.productRateSymbol}}{{(products.productRate - (products.productOfferPercent * products.productRate / 100)).toFixed(0)}}</span>
+                                                            </span>
                                                             <!-- <div class="countCart" *ngIf="products.quantityBool">
                                                                 <button (click)="countClick(products.productID,products.quantity,0)">-</button>
                                                                 <input type="text" class="text-center" [ngModel]="products.quantity">
-                                                                <button (click)="countClick(products.productID,products.quantity ? products.quantity : 0,1)">+</button>
+                                                                <button (click)="countClick(products.productID,products.quantity,1)">+</button>
                                                             </div> -->
                                                             <!-- <button *ngIf="!products.quantityBool" class="btn btn-danger btn-sm" (click)="openCount(products.productID)">ADD TO CART</button> -->
-                                                            <button class="btn btn-danger btn-sm" (click)="gotoProductDesc(products.productName,products.productID)">ADD TO CART</button>
+                                                            <!-- <button class="btn btn-danger btn-sm" (click)="gotoProductDesc(products.productName,products.productID)">ADD TO CART</button> -->
+
                                                         </div>
                                                     </div>
                                                 </div>

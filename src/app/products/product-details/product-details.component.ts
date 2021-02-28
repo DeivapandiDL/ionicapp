@@ -49,7 +49,56 @@ getProductStoreCount:any = [];
     }
     return true;
   }
+  widthContainer:any;
+  getSliderInterval:any;
+  myStartFunction(){
+    this.getSliderInterval = setInterval(() =>{
+      this.getSliderPrev(1)
+    },6000)
+  }
+  
+  myStopFunction() {
+    clearInterval(this.getSliderInterval);
+    console.log("mouse enter detected");
+  }
 
+
+  marginDataSet:any = {};
+tempcountSlider:number = 0;
+sliderWidthSet:number = 280;
+tempTrans:number;
+getSliderPrev(nos){
+if(nos == 1){
+  if(this.tempcountSlider <= this.relatedProduct.length - 5){
+    this.tempcountSlider = this.tempcountSlider + 1;
+    this.tempTrans = this.tempcountSlider * this.sliderWidthSet;
+    this.marginDataSet = {
+      '-ms-transform': 'translateX(-'+this.tempTrans+'px)',
+    'transform': 'translateX(-'+this.tempTrans+'px)'
+    };
+  }
+  else{
+      this.marginDataSet = {
+       '-ms-transform': 'translateX(0px)',
+      'transform': 'translateX(0px)'
+      };
+      this.tempcountSlider = 0;
+  }
+}
+else if (nos == 0){
+  if(this.tempcountSlider > 0){
+    this.tempTrans = this.tempTrans - this.sliderWidthSet;
+    this.tempcountSlider = this.tempcountSlider - 1;
+    this.marginDataSet = {
+      '-ms-transform': 'translateX(-'+this.tempTrans+'px)',
+    'transform': 'translateX(-'+this.tempTrans+'px)'
+    };
+  }
+}
+}
+
+
+relatedProduct:any = [];
   getProductDetails(id){
     this.appService.getProductDetails(id).subscribe(data =>{
       console.log(data);
@@ -59,6 +108,16 @@ getProductStoreCount:any = [];
        this.cartNumber = temparray[0].count;
        console.log(this.cartNumber);
       }
+      this.appService.getRelatedProducts(this.getProductList.subcategoryID).subscribe(res =>{
+        console.log(res)
+        if(res){ 
+        this.relatedProduct = res;
+        this.widthContainer = this.relatedProduct.length * 300;
+        this.getSliderInterval = setInterval(() =>{
+          this.getSliderPrev(1)
+        },6000)
+        }
+      })
     })
   }
 tempcount:any = [];

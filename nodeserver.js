@@ -41,22 +41,22 @@ var mysqlConnection = mysql.createConnection({
 });
 mysqlConnection.connect((err) => {
     if (!err)
-        console.log('DB connection created successfully');
+        console.log	('DB connection created successfully');
     else
-        console.log("error in db" + JSON.stringify(err, undefined, 2));
+        console.log	("error in db" + JSON.stringify(err, undefined, 2));
 });
-app.listen(3000, () => console.log('express is running'));
+app.listen(3000, () => console.log	('express is running'));
 
 //get all customer datas  ex:/customer
 app.get('/customer', (req, res) => {
     mysqlConnection.query('select * from customer', (err, rows, fields) => {
         if (!err)
-        // console.log(rows); displays in terminal
+        // console.log	(rows); displays in terminal
         //to display in browser
             res.send(rows);
 
         else
-            console.log(err);
+            console.log	(err);
     });
 });
 
@@ -64,11 +64,11 @@ app.get('/customer', (req, res) => {
 app.get('/customer/:id', (req, res) => {
     mysqlConnection.query('select * from customer where id=?', [req.params.id], (err, rows, fields) => {
         if (!err)
-        // console.log(rows); displays in terminal
+        // console.log	(rows); displays in terminal
         //to display in browser
             res.send(req.params);
         else
-            console.log(err);
+            console.log	(err);
     });
 });
 
@@ -79,14 +79,14 @@ app.delete('/customer/:id', (req, res) => {
 
             res.send('deleted successfuly');
         else
-            console.log(err);
+            console.log	(err);
     });
 });
 
 app.post('/addCustomer', (req, res) => {
     //insert an customer
 
-console.log(req.body);
+console.log	(req.body);
     const val = req.body;
     var sql= "INSERT INTO customer (name, email,phone,password,address) VALUES (?,?,?,?,?)";
     mysqlConnection.query(sql,[val.name,val.email,val.phone,val.password,val.address] , (err, rows, fields) => {
@@ -95,7 +95,7 @@ console.log(req.body);
          
         }
         else
-            console.log(err);
+            console.log	(err);
     });
 });
 
@@ -112,7 +112,7 @@ mysqlConnection.query(query,[val.name,val.phone,val.password,val.address,val.id]
            
         }
         else
-            console.log(err);
+            console.log	(err);
     });
 
 
@@ -130,7 +130,7 @@ app.get('/product', (req, res) => {
             res.send(rows);
         }
         else{
-            console.log(err);
+            console.log	(err);
         }
     });
 });
@@ -139,11 +139,11 @@ app.get('/product', (req, res) => {
 app.get('/addproduct/:id', (req, res) => {
     mysqlConnection.query('select * from addproduct where productID =?', [req.params.id], (err, rows, fields) => {
         if (!err)
-        // console.log(rows); displays in terminal
+        // console.log	(rows); displays in terminal
         //to display in browser
             res.send(req.params);
         else
-            console.log(err);
+            console.log	(err);
     });
 });
 
@@ -153,7 +153,7 @@ app.get('/deleteproduct/:id', (req, res) => {
         if (!err)
             res.send(rows);
         else
-            console.log(err);
+            console.log	(err);
     });
 });
 
@@ -164,7 +164,7 @@ app.post('/addproduct', (req, res) => {
         if (!err)
             res.send("inserted successfully");
         else
-            console.log(err);
+            console.log	(err);
     });
 });
 
@@ -174,12 +174,12 @@ app.post('/addproduct', (req, res) => {
 app.get('/getCategory', (req, res) =>{
     mysqlConnection.query('select * from category', (err, rows, fields) => {
         if (!err)
-        // console.log(rows); displays in terminal
+        // console.log	(rows); displays in terminal
         //to display in browser
             res.send(rows);
 
         else
-            console.log(err);
+            console.log	(err);
     });
 })
 
@@ -189,12 +189,12 @@ app.get('/getCategory', (req, res) =>{
 app.get('/getSubCategory', (req, res) =>{
     mysqlConnection.query('select * from subcategory', (err, rows, fields) => {
         if (!err)
-        // console.log(rows); displays in terminal
+        // console.log	(rows); displays in terminal
         //to display in browser
             res.send(rows);
 
         else
-            console.log(err);
+            console.log	(err);
     });
 });
 
@@ -232,19 +232,19 @@ app.get('/getProducts', (req, res) => {
                     res.send(categoryList);
             }
             else{
-                console.log(errproduct);
+                console.log	(errproduct);
             }
 
             });
 
         }
         else{
-            console.log(errcategory);
+            console.log	(errcategory);
         }
         })
     }
         else{
-            console.log(err);
+            console.log	(err);
         }
         
     })
@@ -277,7 +277,7 @@ app.get('/getCategoryProduct/:id', (req, res) => {
             
         }
         else{
-            console.log(err);
+            console.log	(err);
         }
     });
 });
@@ -291,7 +291,7 @@ app.get('/getProductDetails/:id', (req, res) => {
         if(!errprod){
             res.send(getProducts);
         }
-        console.log(getProducts);
+        console.log	(getProducts);
     })
 
 })
@@ -301,79 +301,112 @@ app.get('/getProductDetails/:id', (req, res) => {
 app.get('/getCart', (req, res) =>{
     mysqlConnection.query('select * from addtocart', (err, rows, fields) => {
         if (!err)
-        // console.log(rows); displays in terminal
+        // console.log	(rows); displays in terminal
         //to display in browser
             res.send(rows);
 
         else
-            console.log(err);
+            console.log	(err);
     });
 });
 
 //add to cart insert details
 var temp=0;
 var arr=[];
+var tempProductArrayList = [];
 app.post('/addCart', (req, res) => {
     //insert an cart
 obj=Object.assign({}, req.body);
+tempProductArrayList = req.body;
 var date = new Date();
-for(i=0;i<req.body.length;i++){
+let values=tempProductArrayList.reduce((o,val)=>{
+                    let ini=[];
+                    ini.push(val.productName);
+                    ini.push(val.productID);
+                    ini.push(val.productDesc);
+                    ini.push(val.categoryID);
+                    ini.push(val.customerID);
+                    ini.push(date);
+                    ini.push(val.productQuantity);
+                    ini.push(val.productPrice);
+                    ini.push(val.totalPrice);
+                    o.push(ini);
+                    return o
+              },[])
+     console.log	(values);
+var sql = "INSERT INTO addtocart (productName,productID,productDesc,categoryID,customerID,createdDate,productQuantity,productPrice,totalPrice) VALUES ?";
 
-val=obj[i];
-   arr.push(val);
-    var sql= "INSERT INTO addtocart (productName,productID,productDesc,productImage,categoryID,customerID,createdDate,productQuantity,productPrice,totalPrice) VALUES (?,?,?,?,?,?,?,?,?,?)";
-    mysqlConnection.query(sql,[val.productName,val.productID,val.productDesc,val.productImage,val.categoryID,val.customerID,date,val.productQuantity,val.productPrice,val.totalPrice] , (err, rows, fields) => {
-        if (!err){
-             temp=temp+1;
-            // arr.push(val);
-            // console.log(val);
-        }
-        else
-            console.log(err);
-    });
-}
-console.log('temp value',temp,req.body.length);
-res.send(true);
-orderEmailNotification();
-  if(temp==req.body.length){
+mysqlConnection.query(sql, [values], function (err, result) { //pass values array (from above)  directly here
+    if (err){ throw err;}
+    else{ 
+    console.log	("Number of records inserted: " + result.affectedRows);
     res.send(true);
-}
+    var q = 'UPDATE addproduct SET productCount = 2 WHERE productID = 20';
+    }
+  });
+
+
+
+
+
+// for(i=0;i<req.body.length;i++){
+
+// val=obj[i];
+//    arr.push(val);
+//     var sql= "INSERT INTO addtocart (productName,productID,productDesc,categoryID,customerID,createdDate,productQuantity,productPrice,totalPrice) VALUES (?,?,?,?,?,?,?,?,?)";
+//     mysqlConnection.query(sql,[val.productName,val.productID,val.productDesc,val.categoryID,val.customerID,date,val.productQuantity,val.productPrice,val.totalPrice] , (err, rows, fields) => {
+//         if (!err){
+//              temp=temp+1;
+//             // arr.push(val);
+//             // console.log	(val);
+//         }
+//         else
+//             console.log	(err);
+//     });
+// }
+// console.log	('temp value',temp,req.body.length);
+// res.send(true);
+// orderEmailNotification();
+//   if(temp==req.body.length){
+//     res.send(true);
+// }
+// });
 });
 
-function orderEmailNotification()
-{
-         let transport = nodemailer.createTransport({
-            service:'gmail',
-            auth: {
-               user: 'facteuronline@gmail.com',
-               pass: 'Facteur@123'
-            }
-        });
-       console.log(arr);
-      totalpricevalue=0;
-    var content_html='<table style="width:100%"  border = "1" cellpadding = "5" cellspacing = "5"><caption><h3>Product Details</h3></caption><tr> <th>Product Name</th><th>Product Count</th><th>Product Rate</th></tr>';
-    for (var i = 0; i < arr.length; i++) {
-        totalpricevalue +=arr[i].totalPrice;
-    content_html += '<tr><td>'+arr[i].productName+'</td><td>'+arr[i].productQuantity+'</td><td>'+arr[i].productPrice+'</td></tr>';
-    }
-    content_html +='<tr><td colspan="2" style="text-align:right;">Total Price</td><td>'+totalpricevalue+'</td></tr></table>';
+// function orderEmailNotification()
+// {
+//          let transport = nodemailer.createTransport({
+//             service:'gmail',
+//             auth: {
+//                user: 'facteuronline@gmail.com',
+//                pass: 'Facteur@123'
+//             }
+//         });
+//        console.log	(arr);
+//       totalpricevalue=0;
+//     var content_html='<table style="width:100%"  border = "1" cellpadding = "5" cellspacing = "5"><caption><h3>Product Details</h3></caption><tr> <th>Product Name</th><th>Product Count</th><th>Product Rate</th></tr>';
+//     for (var i = 0; i < arr.length; i++) {
+//         totalpricevalue +=arr[i].totalPrice;
+//     content_html += '<tr><td>'+arr[i].productName+'</td><td>'+arr[i].productQuantity+'</td><td>'+arr[i].productPrice+'</td></tr>';
+//     }
+//     content_html +='<tr><td colspan="2" style="text-align:right;">Total Price</td><td>'+totalpricevalue+'</td></tr></table>';
 
-        const message = {
-            from: 'facteuronline@gmail.com', // Sender address
-            to: ['facteuronline@gmail.com','deivapandi18@gmail.com'],         // List of recipients
-            subject: 'Goatoo Order Placed Successfully', // Subject line
-            html: content_html
-        };
-        transport.sendMail(message, function(err, info) {
-            if (err) {
-              console.log(err)
-            } else {
-              console.log(info);
-            }
-        });
+//         const message = {
+//             from: 'facteuronline@gmail.com', // Sender address
+//             to: ['facteuronline@gmail.com','deivapandi18@gmail.com'],         // List of recipients
+//             subject: 'Goatoo Order Placed Successfully', // Subject line
+//             html: content_html
+//         };
+//         transport.sendMail(message, function(err, info) {
+//             if (err) {
+//               console.log	(err)
+//             } else {
+//               console.log	(info);
+//             }
+//         });
 
 
-}
+// }
 
 //get particular customer using id ex:/customer/1
 app.get('/getCustomerProduct/:id', (req, res) => {
@@ -385,7 +418,7 @@ app.get('/getCustomerProduct/:id', (req, res) => {
             res.send(rows);
         }
         else{ 
-            console.log(err);
+            console.log	(err);
         }
     });
 });
@@ -403,7 +436,7 @@ app.post('/wishlist', (req, res) => {
          
         }
         else
-            console.log(err);
+            console.log	(err);
     });
 });
 
@@ -416,38 +449,68 @@ app.get('/deleteWishlist/:id', (req, res) => {
             res.send("Wishlist Deleted Successfully");
         }
         else
-            console.log(err);
+            console.log	(err);
     });
 });
 
 
-
+var dataforwishlist = [];
+var wishListdata = [];
 app.get('/getWishlist/:id', (req, res) => {
-    const val = req.body;
-    console.log(req.body);
-   mysqlConnection.query('select * from wishlist where customerID=?',[req.params.id], (err, rows, fields) => {
+    mysqlConnection.query('select * from addproduct', (err, rows, fields) => {
         if (!err){
-            res.send(rows);
+    const val = req.body;
+    dataforwishlist = rows;
+    // console.log	(rows);
+   mysqlConnection.query('select * from wishlist where customerID=?',[req.params.id], (err, ro, fields) => {
+        if (!err){
+            sendWishlist = [];
+                wishListdata = ro;
+            dataforwishlist.forEach(product =>{
+                    wishListdata.forEach(wish => {
+                        if(product.productID == wish.productID){
+                            product.customerID = wish.customerID
+                            sendWishlist.push(product);
+                        }
+                    })
+            })
+            res.send(sendWishlist);
+            console.log	(sendWishlist);
         }
-        else
-            console.log(err);
+        else{ 
+            console.log	(err);
+        }
     });
+}
+
+})
 });
-
-
 
 // create category
 
 app.post('/createCategory', (req, res) => {
     const val = req.body;
-    console.log(val.catName);
+    console.log	(val.catName);
     var sql= "INSERT INTO category (catName) VALUES (?)";
     mysqlConnection.query(sql,[val.catName] , (err, rows, fields) => {
         if (!err){
             res.send("true");
         }
         else
-            console.log(err);
+            console.log	(err);
+    });
+});
+
+
+// related product get
+app.get('/getRelatedProductsList/:id', (req, res) => {
+    mysqlConnection.query('select * from addproduct where subcategoryID=?', [req.params.id], (err, rows, fields) => {
+        if (!err)
+        // console.log  (rows); displays in terminal
+        //to display in browser
+            res.send(rows);
+        else
+            console.log (err);
     });
 });
 
@@ -457,17 +520,16 @@ app.post('/createCategory', (req, res) => {
 
 app.post('/createSubCategory', (req, res) => {
     const val = req.body;
-    console.log(val.catName);
+    console.log	(val.catName);
     var sql= "INSERT INTO subcategory (catID,subCatName) VALUES (?,?)";
     mysqlConnection.query(sql,[val.catID,val.subCatName] , (err, rows, fields) => {
         if (!err){
             res.send("true");
         }
         else
-            console.log(err);
+            console.log	(err);
     });
 });
-
 
 
 
@@ -484,7 +546,7 @@ app.post('/checkCustomer', (req, res) =>{
         if(!errprod){
             isValid=user;
             userArray = user;
-            console.log(user.length);
+            console.log	(user.length);
             if(user.length==1){
                 res.send(userArray);
             }
@@ -495,8 +557,8 @@ app.post('/checkCustomer', (req, res) =>{
         }
       
     });
-    // if(isValid==''){console.log('Username and Password  match');res.send('match')}
-    //     else   {console.log('Username and Password not match');res.send('notmatch')}
+    // if(isValid==''){console.log	('Username and Password  match');res.send('match')}
+    //     else   {console.log	('Username and Password not match');res.send('notmatch')}
     
    
 });
@@ -506,18 +568,18 @@ var fs = require('fs');
 const  multipartMiddleware  =  multipart({ uploadDir:  './pdtImagesUploads' });
 ;
 app.get('/api/imageupload', (req, res) => {
-    console.log('image get',multipartMiddleware);
+    console.log	('image get',multipartMiddleware);
     res.json({
         'message': 'hello'
     });
 });
 app.post('/api/imageupload', multipartMiddleware, (req, res) => {
-   console.log('add new product image testing')
+   console.log	('add new product image testing')
 
 
      var tmp_path = req.files.uploads[0].path;
     var target_path = './pdtImagesUploads/' + req.files.uploads[0].name;
-    console.log(tmp_path);
+    console.log	(tmp_path);
 
     fs.rename(tmp_path, target_path, function(err) {
         if (err) throw err;
@@ -536,15 +598,15 @@ app.post('/api/imageupload', multipartMiddleware, (req, res) => {
 
 var uploadImage='';
  app.post("/productImageUpload",function(req,res,next){
-    // console.log('imagepath',req);
+    // console.log	('imagepath',req);
     uploadImage =req.body.file;
-    console.log('image file',uploadImage);
+    console.log	('image file',uploadImage);
     // var filename=file.name;
     // var filedata=file.data;
 
     // var filepath="./pdtImagesUploads/";
     // var fileimage=filepath+filename;
-    // console.log(fileimage);
+    // console.log	(fileimage);
 
 
      //     file.mv(filepath+filename,function(err,result){
@@ -560,7 +622,7 @@ var uploadImage='';
                  
                 }
                 else
-                    console.log(err);
+                    console.log	(err);
             });
  
 
@@ -578,7 +640,7 @@ var uploadImage='';
 
 app.post('/addNewProduct', (req, res) => {
  
-console.log('details::::',req.body);
+console.log	('details::::',req.body);
 const val = req.body;
 // var dir = './pdtImagesUploads/'+val.productImage;
 // imagesave='./src/assets/images/'+val.categoryID;
@@ -587,12 +649,12 @@ const val = req.body;
 //     }
 //     else{
 //         imagelink=imagesave+'/'+val.productImage;
-//     console.log(imagelink);
+//     console.log	(imagelink);
 //     if(!fs.existsSync(imagelink)){
-//         console.log('path available',imagelink);
+//         console.log	('path available',imagelink);
 //         fs.copyFile(dir, imagelink, (err) => {
 //               if (err) throw err;
-//               console.log('source.txt was copied to destination.txt');
+//               console.log	('source.txt was copied to destination.txt');
 //               fs.unlinkSync(dir);
 //             });
 
@@ -607,7 +669,7 @@ const val = req.body;
     mysqlConnection.query(sql,[val.categoryID,val.subcategoryID,val.productName,val.productImage,val.productCount,val.productDescription,val.productRateSymbol,val.productRate,val.productOfferPercent,val.expiryDate] , (err, rows, fields) => {
         if (!err){
             // res.write("product added successfully");
-            console.log(val.expiryDate);
+            console.log	(val.expiryDate);
             res.send('true');
             let transport = nodemailer.createTransport({
             // host: 'smtp.gmail.com',
@@ -629,15 +691,15 @@ const val = req.body;
         };
         transport.sendMail(message, function(err, info) {
             if (err) {
-              console.log(err)
+              console.log	(err)
             } else {
-              console.log(info);
+              console.log	(info);
             }
         });
 
         }
         else
-            console.log('error',err);
+            console.log	('error',err);
     });
     
 
@@ -645,7 +707,7 @@ const val = req.body;
 });
 
 app.post('/editProduct',(req,res) => {
-    // console.log('editProduct',req.body)
+    // console.log	('editProduct',req.body)
     const val = req.body;
     var query = 'UPDATE addproduct SET productName = ?, productCount =?,productImage=?,productDescription=?,productRateSymbol=?,productRate=?,productOfferPercent=? WHERE productID=?';  
 
@@ -655,7 +717,7 @@ mysqlConnection.query(query,[val.productName,val.productCount,val.productImage,v
            
         }
         else
-            console.log(err);
+            console.log	(err);
     });
 
 
@@ -663,17 +725,17 @@ mysqlConnection.query(query,[val.productName,val.productCount,val.productImage,v
 
 //forget password
 app.get('/forgetPassword',(req,res) => {
-    // console.log('editProduct',req.body)
+    // console.log	('editProduct',req.body)
     //  var email = req.body.username;
     // var password = req.body.password;
     var email='fdsfthamdeva@gmail.com';
   mysqlConnection.query('select * from customer where email =?', [email], (errprod, user, fields) => {
         if(!errprod){ 
             if(user.length==0){
-                console.log('Email not available',user);
+                console.log	('Email not available',user);
             }  
             else{
-                console.log('Email available',user);
+                console.log	('Email available',user);
              let transport = nodemailer.createTransport({
             // host: 'smtp.gmail.com',
             // port: 587,
@@ -694,16 +756,16 @@ app.get('/forgetPassword',(req,res) => {
         };
         transport.sendMail(message, function(err, info) {
             if (err) {
-              console.log(err)
+              console.log	(err)
             } else {
-              console.log(info);
+              console.log	(info);
             }
         });      
                 
                 }
         }
         else{
-            console.log('email not available',user)
+            console.log	('email not available',user)
         }
       
     });

@@ -30,8 +30,8 @@
                         <tr *ngFor="let data of showDataCart;let i = index;">
                             <td>{{i + 1}}</td>
                             <td>
-                                <img class="checkoutProduct" *ngIf="!data.imgURL" src="../../assets/images/product/1.jpg">
-                                <img class="checkoutProduct" *ngIf="data.imgURL && data.imgURL != '' " src="../../assets/images/{{data.categoryID}}/{{data.imgURL}}">
+                                <img class="checkoutProduct" *ngIf="!data.productImage" src="../../assets/images/product/1.jpg">
+                                <img class="checkoutProduct" *ngIf="data.productImage && data.productImage != '' " src="{{data.productImage}}">
                             </td>
                             <td>{{data.productName}}</td>
                             <td>

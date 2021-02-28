@@ -3,9 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { AppserviceService } from 'src/app/services/appservice.service';
 import { Router } from '@angular/router';
-import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { ImageCroppedEvent, base64ToFile,ImageCropperComponent, CropperPosition} from 'ngx-image-cropper';
+
 import { DomSanitizer } from '@angular/platform-browser';
 import { CookieService } from 'ngx-cookie-service';
+import {IAngularMyDpOptions, IMyDateModel} from 'angular-mydatepicker';
 
 @Component({
   selector: 'app-admin-product',
@@ -13,9 +15,15 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrls: ['./admin-product.component.scss'],
 })
 export class AdminProductComponent implements OnInit {
+  myDpOptions: IAngularMyDpOptions = {
+    dateRange: false,
+    dateFormat: 'dd-mm-yyyy'
+    // other options are here...
+  };
 
+  myDateInit: boolean = true;
+  model: IMyDateModel = null;
   registerProduct: FormGroup;
-  myDatePickerOptions: any;
   submitted = false;
   getProduct:any = {};
   uploadedFiles: Array < File > ;
@@ -23,16 +31,19 @@ export class AdminProductComponent implements OnInit {
   imageChangedEvent: any = '';
   croppedImage: any = '';
   cropperHeight: any = ''; cropperWidth: any = '';
+getCropper:Blob;
+lastCroppedImage: any;
+lastCropperPosition: CropperPosition;
 
   fileChangeEvent(event: any): void {
       this.imageChangedEvent = event;
   }
+  fileUpload:any;
   imageCropped(event: ImageCroppedEvent) {
       this.croppedImage = event.base64;
-      this.cropperHeight = event.height;
-    this.cropperWidth = event.width;
-      console.log(this.cropperWidth);
-      
+    
+      console.log(this.croppedImage);
+
   }
   imageLoaded(image: HTMLImageElement) {
       // show cropper
@@ -43,9 +54,21 @@ export class AdminProductComponent implements OnInit {
   loadImageFailed() {
       // show message
   }
+  
+  
+  minDate:Date = new Date();
+
   ngOnInit() {
-    this.myDatePickerOptions = {
-      dateFormat: 'dd-mm-yyyy'
+    if (this.myDateInit) {
+        // this.model = {isRange: false, singleDate: {date: { 
+        //                                                     year: 2019, 
+        //                                                     month: 5, 
+        //                                                     day: 14 
+        //                                                   }}};
+    }
+    else {
+        // Initialize to today with javascript date object
+        this.model = {isRange: false, singleDate: {jsDate: new Date()}};
     }
     if(this.appservice.adminProductId != ''){
       this.getProductEdit(this.appservice.adminProductId);
@@ -182,6 +205,7 @@ cat='';
          // display form values on success
         //  this.registerProduct.value.productImage='';
          this.registerProduct.value.productImage = this.croppedImage;
+         this.registerProduct.value.expiryDate = this.registerProduct.value.expiryDate.singleDate.jsDate;
          this.appservice.getAddProductDetails(this.registerProduct.value).subscribe(data => {
           console.log('product details:::',data);
           console.log('product values',this.registerProduct.value);

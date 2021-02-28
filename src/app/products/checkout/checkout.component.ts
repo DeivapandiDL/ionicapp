@@ -82,7 +82,7 @@ proceedtoCheckout(){
   if(Object.keys(this.userDetailsAuth).length > 0){
     this.showDataCart.forEach(element => {
       element.customerID = this.userDetailsAuth.id;
-      obj.push({'productName':element.productName,'productDesc':element.productDescription,'productID':element.productID,'productImage':element.imgURL,'categoryID':element.categoryID,'customerID':this.userDetailsAuth.id,'productQuantity':element.quantity,'productPrice':element.productRate,'totalPrice':element.productTotalRate})
+      obj.push({'productName':element.productName,'productDesc':element.productDescription,'productID':element.productID,'categoryID':element.categoryID,'customerID':this.userDetailsAuth.id,'productQuantity':element.quantity,'productPrice':element.productRate,'totalPrice':element.productTotalRate})
     });
     console.log(obj);
     console.log(this.showDataCart);
