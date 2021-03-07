@@ -1,0 +1,394 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+
+/* Core CSS required for Ionic components to work properly */
+
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,900;1,100&display=swap');
+
+/* common css */
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+}
+
+div,
+p {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+}
+
+section {
+    width: 100%;
+    overflow: hidden;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.dFlex {
+    display: flex
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.relativeClass {
+    position: relative;
+}
+
+.mainDiv {
+    padding-top: 94px;
+}
+
+.plr-15 {
+    padding: 0 15px;
+}
+
+.menuList .item::before {
+    position: absolute;
+    width: 100%;
+    height: 0px;
+    background: #fff;
+    content: "";
+    bottom: 0px;
+}
+
+.menuList .item:hover::before,
+.menuList .item.selected::before {
+    height: 3px;
+}
+
+.paddTop {
+    margin-top: 122px;
+    max-height: 100vh;
+    overflow-y: auto;
+    background: #fafafa;
+}
+
+div a,
+table a {
+    color: #9c1a2c;
+}
+
+.highlight {
+    color: #9c1a2c;
+}
+
+div a:hover {
+    color: #9c1a2c;
+    text-decoration: underline;
+}
+
+div,
+p {
+    color: #333;
+}
+
+h2,
+.h2 {
+    color: #9c1a2c
+}
+
+.permaLink {
+    width: 100%;
+    padding: 20px 15px 15px 15px;
+    display: flex;
+    align-items: center;
+}
+
+.permaLink * {
+    margin-right: 10px;
+}
+
+.permaLink span {
+    columns: #333333;
+}
+
+.Banner {
+    background: #333;
+    padding: 50px 0;
+    position: relative;
+}
+
+.Banner h2 {
+    text-transform: uppercase;
+    color: #ffffff;
+    padding-left: 0
+}
+
+.footer {
+    background: #ffffff;
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 1px solid #ccc
+}
+
+.footer h4 {
+    margin-bottom: 30px;
+}
+
+.btmFooter {
+    background: #9c1a2c;
+    padding: 8px 0 8px 0;
+    text-align: center;
+}
+
+.btmFooter * {
+    color: #ffffff
+}
+
+.mr-15 {
+    margin-right: 15px;
+}
+
+button:focus {
+    outline: unset !important
+}
+
+// ion-header {
+//     z-index: 0;
+// }
+.modal {
+    display: block !important;
+    background: rgba(0, 0, 0, 0.5)
+}
+
+.modal-dialog {
+    top: 150px;
+    max-width: 280px !important;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+.modal-body.text-center.highlight {
+    font-size: 40px;
+}
+
+.table td,
+.table th {
+    vertical-align: middle !important;
+}
+
+.fxRight {
+    justify-content: flex-end;
+}
+
+.star {
+    color: #9c1a2c
+}
+
+textarea.form-control {
+    height: 100px !important;
+    resize: none;
+}
+
+.invalid-feedback * {
+    color: #9c1a2c !important;
+    font-size: 12px;
+    // position: absolute;
+}
+
+.form-group {
+    margin-bottom: 20px !important
+}
+
+.form-group label {
+    font-weight: 500;
+}
+
+dp-date-picker {
+    display: block !important;
+}
+
+dp-date-picker.dp-material .dp-picker-input {
+    display: block;
+    width: 100% !important;
+    height: calc(1.5em + .75rem + 2px) !important;
+    padding: .375rem .75rem;
+    font-size: 1rem !important;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.pickerControl.is-invalid input,
+.was-validated .pickerControl:invalid input {
+    border-color: #dc3545;
+    padding-right: 0;
+}
+
+table td p {
+    margin: 0
+}
+
+.fewLeft {
+    color: #9c1a2c;
+    font-weight: bold;
+    margin: 0 0 20px 0;
+}
+
+.outStack {
+    color: #008000;
+    margin: 0 0 20px 0;
+    font-size: 30px;
+}
+
+.outStackproduct {
+    font-size: 14px;
+    position: absolute;
+    bottom: 80px;
+    color: #008000;
+    text-align: center;
+}
+
+.fewLeftproduct {
+    font-size: 14px;
+    position: absolute;
+    color: #9c1a2c;
+    bottom: 80px;
+    text-align: center;
+    font-weight: bold
+}
+
+@media (min-width: 1200px) {
+    .container {
+        width: 90% !important;
+        max-width: 1400px !important;
+    }
+}
+
+// slider design
+.slideGrid {
+    display: flex;
+    width: 1110px;
+    flex-direction: column;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.sliderContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    transition: all 0.4s linear;
+    -webkit-transition: all 0.4s linear;
+    -moz-transition: all 0.4s linear;
+    -ms-transition: all 0.4s linear;
+    -o-transition: all 0.4s linear;
+}
+
+.slides {
+    max-width: calc(280px - 15px);
+    width: 100%;
+    margin: 0 15px 0 0;
+}
+
+.relativeClass {
+    position: relative
+}
+
+.sliderPrevNext {
+    position: absolute;
+    top: calc(50% - 20px);
+    border: 1px solid #9c1a2c;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    font-size: 30px;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+    transition: all 0.3s lienar;
+    -webkit-transition: all 0.3s lienar;
+    -moz-transition: all 0.3s lienar;
+    -ms-transition: all 0.3s lienar;
+    -o-transition: all 0.3s lienar;
+}
+
+.sliderPrevNext:hover {
+    background: #9c1a2c;
+    color: #fff;
+    text-decoration: none !important;
+}
+
+.sliderPrevNext.prev {
+    left: 0
+}
+
+.sliderPrevNext.next {
+    right: 0
+}
+
+.offerPriceCrash {
+    position: relative;
+    opacity: 0.7;
+}
+
+.offerPriceCrash::before {
+    content: "";
+    position: absolute;
+    background: #333;
+    top: calc(50% - 1px);
+    width: 100%;
+    height: 1px;
+}
+
+.offerPrice {
+    display: flex;
+    width: 100%;
+}
+
+span.priceOfferGreen {
+    font-weight: 500;
+}
+
+.offerPrice * {
+    margin-right: 12px;
+}
+
+.offerPrice .per {
+    color: #008000
+}
+
+.priceGrid {
+    margin-top: 16px;
+}

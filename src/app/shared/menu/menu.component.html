@@ -1,0 +1,82 @@
+<ion-header class="header">
+    <div class="container dFlex ion-align-items-center ion-justify-content-between plr-15">
+        <a class="logo" routerLink="/home">
+            <img src="../../../assets/images/logo.png">
+        </a>
+        <div class="searchNav">
+            <ion-searchbar type="text" debounce="500" (ionChange)="getItems($event)"></ion-searchbar>
+            <ion-list *ngIf="isItemAvailable" class="ionSearch">
+                <ion-item *ngFor="let item of items" (click)="gotoProduct(item)">{{ item.productName }}</ion-item>
+            </ion-list>
+        </div>
+        <div class="loginNav dFlex searchNav">
+            <a (click)="loginCredFun()" *ngIf="loginCred == ''" class="pointer">Login</a>
+            <a class="profileNameIcon" (click)="profileEdit()" *ngIf="loginCred != ''">{{loginCred}} <ion-icon name="arrow-round-down"></ion-icon></a>
+            <div class="dropdownLoginMenu" *ngIf="profileDropdown" (clickOutside)="toggleLoginMenu()">
+                <a (click)="closeDropdown()" routerLink="/login/editProfile">Edit Profile</a>
+                <a (click)="closeDropdown()" routerLink="/products/order-history">Order History</a>
+                <a (click)="closeDropdown()" routerLink="products/wishlist">wishlist</a>
+                <a (click)="logout()">Logout</a>
+            </div>
+            <div class="cartIcon">
+                <a (click)="addtoCart()" [class.disabled]="count == 0">
+                    <ion-icon ios="ios-cart" md="md-cart"></ion-icon>
+                    <span *ngIf="count > 0" class="cartClass">{{count}}</span>
+                </a>
+                <div class="cartDropDown" *ngIf="showDropdown" (clickOutside)="toggleDropdownCheckout()">
+                    <h4>Order Summary</h4>
+                    <div class="cartDatas" *ngFor="let cart of showDataCart">
+                        <div class="cartProductName">{{cart.productName}}</div>
+                        <div class="countCart">
+                            <button (click)="countClick(cart,0)">-</button>
+                            <input type="text" class="text-center" value="{{cart.quantity}}">
+                            <button (click)="countClick(cart,1)">+</button>
+                        </div>
+                        <div class="priceCartCount">
+                            {{cart.productRateSymbol}} {{cart.productRate}}.00
+                        </div>
+                    </div>
+                    <div class="cartDatas">
+                        <span>Total Price : </span>
+                        <h5 class="highlight">$ {{totalPrice}}.00</h5>
+                    </div>
+                    <div class="container dropdownContainer">
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <button class="btn btn-danger btn-sm mr-15" (click)="gotoProductPage()">Back to Product</button>
+                                <button class=" btn btn-danger btn-sm " (click)="gotoCheckout(); ">Checkout</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <nav>
+        <div class="flexNav ">
+            <!-- <ion-menu-toggle class="menuList" *ngFor="let p of appPages; let i=i ndex ">
+                <ion-item (click)="getMenu(i,p.id,p.title) " routerDirection="root " [routerLink]="[p.url] " lines="none " detail="false " [class.selected]="selectedIndex==i ">
+                    <ion-label [class.dropdownMenu]="subCategory && subCategory.length > 0">{{ p.title }}</ion-label>
+                </ion-item>
+            </ion-menu-toggle> -->
+            <nav class="navbar navbar-expand-sm">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active" *ngFor="let menu of appPages;let i = index;">
+                            <a class="nav-link" (click)="getMenu(i,menu.id,menu.title,menu.url)">{{menu.title}}  <ion-icon ios="ios-arrow-dropdown" md="md-arrow-dropdown"></ion-icon></a>
+                        </li>
+
+                        <li class="nav-item" *ngIf="adminDropdown">
+                            <a class="nav-link" routerLink="/admin/addProduct">Add New Product</a>
+                        </li>
+                        <li class="nav-item" *ngIf="adminDropdown">
+                            <a class="nav-link" routerLink="/admin/AdminProductList">Product List</a>
+                        </li>
+                    </ul>
+
+                </div>
+            </nav>
+        </div>
+    </nav>
+</ion-header>

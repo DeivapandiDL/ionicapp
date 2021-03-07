@@ -1,0 +1,96 @@
+<div class="paddTop">
+    <div class="container">
+        <div class="row">
+            <div class="permaLink"><a routerLink="/home">Home</a>
+                <ion-icon name="arrow-forward"></ion-icon> <span>Order History</span>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 flex_end">
+                <input class="form-control searchHistory" type="text" [(ngModel)]="searchText" placeholder="Search">
+                <button class="listView" [class.btActive]="list == 'grid'" (click)="view('grid')"><ion-icon ios="ios-grid" md="md-grid"></ion-icon> Grid View</button>
+                <button class="listView" [class.btActive]="list == 'list'" (click)="view('list')"><ion-icon name="list"></ion-icon> List View</button>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="card customCard success" *ngFor="let product of productList | filter : searchText | paginate: { itemsPerPage: 8, currentPage: p }; let i = index;" [ngClass]="{'gridViewCol': list == 'grid', 'listViewCol': list == 'list'}">
+                <i class="fa fa-check"></i>
+                <h4 class="highlight">Delivery Address</h4>
+                <div class="col-md-6">
+                    <div class="productData">
+                        <img class="checkoutProduct" *ngIf="!product.productImage" src="../../assets/images/product/1.jpg">
+                        <img class="checkoutProduct" *ngIf="product.productImage && product.productImage != '' " src="../../assets/images/{{product.categoryID}}/{{product.productImage}}">
+                        <h5>{{product.productName}}</h5>
+                        <span>{{product.productQuantity}} <span class="highlight">*</span> {{product.productPrice}} $</span>
+                        <span>{{product.totalPrice}} $</span>
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="custDetails" *ngFor="let cust of custDetails">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5>{{cust.name}}</h5>
+                                {{cust.address}}
+                            </div>
+                            <div class="col-md-6">
+                                <h5>Phone number</h5>
+                                {{cust.phone}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </div>
+        </div>
+    </div>
+
+    <section class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <a><img src="../../../assets/images/logo.png"></a>
+
+                </div>
+                <div class="col-md-3">
+                    <h4 class="highlight">STAY CONNECTED</h4>
+                    <p>Chenithra Technologies Private Limited, Madipakkam, Ponniamman kovil street, Chennai, 560103, Tamil Nadu, India</p>
+                    <p>Call - 044-4201023</p>
+                    <p>Mail - info@chenithra.com</p>
+                </div>
+                <div class="col-md-3">
+                    <h4 class="highlight">CONTACT</h4>
+                    <p>Facebook</p>
+                    <p>Twitter</p>
+                    <p>Yaaho</p>
+                    <p>Youtube</p>
+                </div>
+                <div class="col-md-3">
+                    <h4 class="highlight">POLICY</h4>
+                    <p>Return Policy</p>
+                    <p>Terms of Use</p>
+                    <p>Security</p>
+                    <p>Privacy</p>
+                    <p>Sitemap</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="btmFooter">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    2021 Chenithra Technologies Pvt Ltd. All Rights Reserved.
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

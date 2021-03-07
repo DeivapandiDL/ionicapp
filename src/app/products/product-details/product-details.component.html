@@ -1,0 +1,141 @@
+<div class="paddTop">
+    <div class="container">
+        <div class="row">
+            <div class="permaLink"><a routerLink="/home">Home</a>
+                <ion-icon name="arrow-forward"></ion-icon> <a routerLink="/products">Products</a>
+                <ion-icon name="arrow-forward"></ion-icon> <span>{{getProductList.productName}}</span>
+            </div>
+        </div>
+    </div>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <img *ngIf="getProductList.productImage == '' " src="../../assets/images/product/1.jpg">
+                        <!-- <img *ngIf="getProductList.productImage != '' " src="../../assets/images/{{getProductList.categoryID}}/{{getProductList.productImage}}"> -->
+                        <img *ngIf="getProductList.productImage != '' " src="{{getProductList.productImage}}">
+
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <h2>{{getProductList.productName}}</h2>
+                    <p>{{getProductList.productDescription}}</p>
+                    <div class="fewLeft" *ngIf="getProductList.productCount < 4 && getProductList.productCount > 0">
+                        ! hurry few left
+                    </div>
+                    <div class="outStack" *ngIf="getProductList.productCount == 0">
+                        Out of Stock
+                    </div>
+                    <div class="priceAddCart">
+                        <div class="priceAmt">
+                            <!-- <h3>{{getProductList.productRateSymbol}} {{getProductList.productRate}} </h3> -->
+                            <div class="fewLeftproduct" *ngIf="getProductList.productCount < 4 && getProductList.productCount > 0">
+                                ! hurry few left
+                            </div>
+                            <div class="outStackproduct" *ngIf="getProductList.productCount == 0">
+                                Out of Stock
+                            </div>
+                            <span class="price" *ngIf="!getProductList.productOfferPercent || getProductList.productOfferPercent == 0">{{getProductList.productRateSymbol}} {{getProductList.productRate}}</span>
+                            <span class="offerPrice" *ngIf="getProductList.productOfferPercent && getProductList.productOfferPercent > 0"> 
+                                <span class="offerPriceCrash"> {{getProductList.productRateSymbol}}{{getProductList.productRate}}</span>
+                            <span class="per"> {{getProductList.productOfferPercent}}% off </span>
+                            <span class="priceOfferGreen"> {{getProductList.productRateSymbol}}{{(getProductList.productRate - (getProductList.productOfferPercent * getProductList.productRate / 100)).toFixed(0)}}</span>
+                            </span>
+                        </div>
+                        <div class="priceCount">
+                            <div class="count">
+                                <button (click)="countClick(0)">-</button>
+                                <input type="text" (keypress)="numberOnly($event)" [(ngModel)]="cartNumber">
+                                <button (click)="countClick(1)">+</button>
+                            </div>
+                            <button (click)="addToCart(getProductList.productID,cartNumber)" class="btn btn-danger btn-sm add">ADD TO CART</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="productGrid slideGridSection" *ngIf="relatedProduct.length > 0">
+        <div class="container">
+            <div class="row">
+                <h2 class="mb-50 col-md-12 catName text-center"><span>Related Products</span></h2>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 relativeClass" (mouseenter)="myStopFunction()" (mouseleave)="myStartFunction()">
+                    <a class="sliderPrevNext prev" (click)="getSliderPrev(0)">
+                        <</a>
+                            <ng-container>
+                                <div class="slideGrid">
+                                    <div class="sliderContainer" #sliderWidth [ngStyle]="marginDataSet" [style.width.px]="widthContainer">
+                                        <div class="slides" *ngFor="let products of relatedProduct;let j = index;">
+                                            <div class="gridProduct">
+                                                <a class="ProductClick">
+                                                    <img *ngIf="products.productImage == '' " src="../../assets/images/product/1.jpg">
+                                                    <img *ngIf="products.productImage != '' " src="{{products.productImage}}">
+                                                </a>
+                                                <div class="productDesc">
+                                                    <h4 class="truncText">{{products.productName}}</h4>
+                                                    <div class="descProduct" tooltip="{{products.productDescription}}">
+                                                        {{products.productDescription | slice:0:50}}... </div>
+                                                    <div class="priceGrid">
+                                                        <span class="price">$ {{products.productRate}}</span>
+                                                        <!-- <button class="btn btn-danger btn-sm" (click)="gotoProductDesc(products.productName,products.productID)">ADD TO CART</button> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a class="sliderPrevNext next" (click)="getSliderPrev(1)">></a>
+                            </ng-container>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <a><img src="../../../assets/images/logo.png"></a>
+
+                </div>
+                <div class="col-md-3">
+                    <h4 class="highlight">STAY CONNECTED</h4>
+                    <p>Chenithra Technologies Private Limited, Madipakkam, Ponniamman kovil street, Chennai, 560103, Tamil Nadu, India</p>
+                    <p>Call - 044-4201023</p>
+                    <p>Mail - info@chenithra.com</p>
+                </div>
+                <div class="col-md-3">
+                    <h4 class="highlight">CONTACT</h4>
+                    <p>Facebook</p>
+                    <p>Twitter</p>
+                    <p>Yaaho</p>
+                    <p>Youtube</p>
+                </div>
+                <div class="col-md-3">
+                    <h4 class="highlight">POLICY</h4>
+                    <p>Return Policy</p>
+                    <p>Terms of Use</p>
+                    <p>Security</p>
+                    <p>Privacy</p>
+                    <p>Sitemap</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="btmFooter">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    2021 Chenithra Technologies Pvt Ltd. All Rights Reserved.
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

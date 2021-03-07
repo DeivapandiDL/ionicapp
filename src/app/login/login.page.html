@@ -1,0 +1,160 @@
+<div class="paddTop">
+    <section>
+        <div class="container maxLogin" *ngIf="loginSignUp == 0">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card m-3">
+                        <h5 class="card-header text-center highlight">Customer Login</h5>
+                        <div class="card-body">
+                            <form [formGroup]="loginForm" class="container" (ngSubmit)="onLoginSubmit()">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Username </label>
+                                            <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': loginSubmitted && l.username.errors }" />
+                                            <div *ngIf="loginSubmitted && l.username.errors" class="invalid-feedback">
+                                                <div *ngIf="l.username.errors.required"> username is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Password </label>
+                                            <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': loginSubmitted && l.password.errors }" />
+                                            <div *ngIf="loginSubmitted && l.password.errors" class="invalid-feedback">
+                                                <div *ngIf="l.password.errors.required"> password is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-center redColor" *ngIf="loginBoolean">
+                                    Username or Password incorrect!!!
+                                </div>
+                                <div class="text-center loginAccBtns">
+                                    <button class="btn btn-danger btn-sm mr-1">Login</button> or <a (click)="signup()" class="highlight">Create Account</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container" *ngIf="loginSignUp == 1">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card m-3">
+                        <h5 class="card-header text-center highlight">Create Customer</h5>
+                        <div class="card-body">
+                            <form [formGroup]="registerForm" class="container" (ngSubmit)="onSubmit()">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Name <span class="start">*</span></label>
+                                            <input type="text" (keypress)="textOnly($event)" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+                                            <div class="error" *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                                                <div *ngIf="f.name.errors.required"> Name is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Email <span class="start">*</span></label>
+                                            <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                                            <div class="error" *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                                <div *ngIf="f.email.errors.required">Email is required</div>
+                                                <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Mobile Number <span class="start">*</span></label>
+                                            <input type="text" (keypress)="numberOnly($event)" formControlName="phone" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" />
+                                            <div class="error" *ngIf="submitted && f.phone.errors" class="invalid-feedback">
+                                                <div *ngIf="f.phone.errors.required">Mobile Number is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Password <span class="start">*</span></label>
+                                            <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                                            <div class="error" *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                                                <div *ngIf="f.password.errors.required">Password is required</div>
+                                                <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Address <span class="start">*</span></label>
+                                            <textarea formControlName="address" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.address.errors }"></textarea>
+                                            <div class="error" *ngIf="submitted && f.address.errors" class="invalid-feedback">
+                                                <div *ngIf="f.address.errors.mustMatch">Address Required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group form-check">
+                                    <input type="checkbox" formControlName="acceptTerms" id="acceptTerms" class="form-check-input checkaccept" [ngClass]="{ 'is-invalid': submitted && f.acceptTerms.errors }" />
+                                    <label for="acceptTerms" class="form-check-label">Accept Terms & Conditions</label>
+                                    <div class="error" *ngIf="submitted && f.acceptTerms.errors" class="invalid-feedback">Accept Ts & Cs is required</div>
+                                </div>
+                                <div class="text-center loginAccBtns">
+                                    <button class="btn btn-danger btn-sm mr-1">Create Account</button>
+                                    <button class="btn btn-secondary btn-sm" type="reset" (click)="onReset()">Reset</button> or <a (click)="login()" class="highlight">Login</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <a><img src="../../../assets/images/logo.png"></a>
+
+                </div>
+                <div class="col-md-3">
+                    <h4 class="highlight">STAY CONNECTED</h4>
+                    <p>Chenithra Technologies Private Limited, Madipakkam, Ponniamman kovil street, Chennai, 560103, Tamil Nadu, India</p>
+                    <p>Call - 044-4201023</p>
+                    <p>Mail - info@chenithra.com</p>
+                </div>
+                <div class="col-md-3">
+                    <h4 class="highlight">CONTACT</h4>
+                    <p>Facebook</p>
+                    <p>Twitter</p>
+                    <p>Yaaho</p>
+                    <p>Youtube</p>
+                </div>
+                <div class="col-md-3">
+                    <h4 class="highlight">POLICY</h4>
+                    <p>Return Policy</p>
+                    <p>Terms of Use</p>
+                    <p>Security</p>
+                    <p>Privacy</p>
+                    <p>Sitemap</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="btmFooter">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    2021 Chenithra Technologies Pvt Ltd. All Rights Reserved.
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

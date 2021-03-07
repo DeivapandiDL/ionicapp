@@ -1,0 +1,162 @@
+<div class="paddTop">
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card m-3">
+                        <h5 class="card-header highlight text-center">Edit Product</h5>
+                        <div class=" card-body" *ngIf="editProductBoolean">
+                            <form [formGroup]="registerProduct" class="container" (ngSubmit)="pdtSubmit()">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Product Name <span class="star">*</span></label>
+                                            <input type="text" formControlName="productName" maxlength="30" [(ngModel)]="getProduct.productName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.productName.errors }" />
+                                            <div *ngIf="submitted && f.productName.errors" class="invalid-feedback">
+                                                <div *ngIf="f.productName.errors.required"> Name is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Select Category <span class="star">*</span></label>
+                                            <select formControlName="categoryID" [(ngModel)]="getProduct.categoryID" (change)="catSelect($event.target.value)" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.categoryID.errors }">
+                                      <option value="">Select</option>
+                                      <option [value]="cat.catID" *ngFor="let cat of catList">{{cat.catName}}</option>
+                                  </select>
+                                            <div *ngIf="submitted && f.categoryID.errors" class="invalid-feedback">
+                                                <div *ngIf="f.categoryID.errors.required">Category is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Select Sub Category <span class="star">*</span></label>
+                                            <select formControlName="subcategoryID" [(ngModel)]="getProduct.subcategoryID" [disabled]="subTempBoolean" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.subcategoryID.errors }">
+                                    <option value=""></option>
+                                    <option [value]="subcat.subCatID" *ngFor="let subcat of subTemp">{{subcat.subCatName}}</option>
+                                    </select>
+                                            <div *ngIf="submitted && f.subcategoryID.errors" class="invalid-feedback">
+                                                <div *ngIf="f.subcategoryID.errors.required">Category is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Count <span class="star">*</span></label>
+                                            <input type="text" formControlName="productCount" (keypress)="numberOnly($event)" maxlength="5" [(ngModel)]="getProduct.productCount" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.productCount.errors }" />
+                                            <div *ngIf="submitted && f.productCount.errors" class="invalid-feedback">
+                                                <div *ngIf="f.productCount.errors.required">Count is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Price Symbol <span class="star">*</span></label>
+                                            <input type="text" formControlName="productRateSymbol" maxlength="1" [(ngModel)]="getProduct.productRateSymbol" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.productRateSymbol.errors }" />
+                                            <div *ngIf="submitted && f.productRateSymbol.errors" class="invalid-feedback">
+                                                <div *ngIf="f.productRateSymbol.errors.required">Price Symbol is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Price <span class="star">*</span></label>
+                                            <input type="text" formControlName="productRate" maxlength="8" (keypress)="numberOnly($event)" [(ngModel)]="getProduct.productRate" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.productRate.errors }" />
+                                            <div *ngIf="submitted && f.productRate.errors" class="invalid-feedback">
+                                                <div *ngIf="f.productRate.errors.required">Price is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Offer Percentage <span class="star">*</span></label>
+                                            <input type="text" formControlName="productOfferPercent" maxlength="3" (keypress)="numberOnly($event)" [(ngModel)]="getProduct.productOfferPercent" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.productOfferPercent.errors }" />
+                                            <div *ngIf="submitted && f.productOfferPercent.errors" class="invalid-feedback">
+                                                <div *ngIf="f.productOfferPercent.errors.required">Offer Percentage is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Description <span class="star">*</span></label>
+                                            <textarea formControlName="productDescription" [(ngModel)]="getProduct.productDescription" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.productDescription.errors }"></textarea>
+                                            <div *ngIf="submitted && f.productDescription.errors" class="invalid-feedback">
+                                                <div *ngIf="f.productDescription.errors.required">Description is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="inputGroupFile01">Upload Product Image <span class="star">*</span></label>
+                                            <input (change)="fileChange($event,$event.target.files)" type="file" id="inputGroupFile01" formControlName="productImage" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.productImage.errors}" />
+                                            <div *ngIf="submitted && f.productImage.errors" class="invalid-feedback">
+                                                <div *ngIf="f.productImage.errors.required">Image is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <img src="../../../assets/images/{{getProduct.categoryID}}/{{getProduct.productImage}}">
+                                        <!-- <img width="100%" class="image imgPreview" *ngIf="imageUrl" [src]="imageUrl"> -->
+                                    </div>
+                                </div>
+
+                                <div class="text-center mt-20">
+                                    <button class="btn btn-danger btn-sm mr-1">Add Product</button>
+                                    <button class="btn btn-secondary btn-sm" type="reset" (click)="onReset()">Cancel</button> </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <a><img src="../../../assets/images/logo.png"></a>
+
+                </div>
+                <div class="col-md-3">
+                    <h4 class="highlight">STAY CONNECTED</h4>
+                    <p>Chenithra Technologies Private Limited, Madipakkam, Ponniamman kovil street, Chennai, 560103, Tamil Nadu, India</p>
+                    <p>Call - 044-4201023</p>
+                    <p>Mail - info@chenithra.com</p>
+                </div>
+                <div class="col-md-3">
+                    <h4 class="highlight">CONTACT</h4>
+                    <p>Facebook</p>
+                    <p>Twitter</p>
+                    <p>Yaaho</p>
+                    <p>Youtube</p>
+                </div>
+                <div class="col-md-3">
+                    <h4 class="highlight">POLICY</h4>
+                    <p>Return Policy</p>
+                    <p>Terms of Use</p>
+                    <p>Security</p>
+                    <p>Privacy</p>
+                    <p>Sitemap</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="btmFooter">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    2021 Chenithra Technologies Pvt Ltd. All Rights Reserved.
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,140 @@
+.customCard {
+    width: 100%;
+    margin: 10px 0px 10px 0;
+    padding: 15px 0 15px 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    overflow: hidden
+}
+
+.w100 {
+    width: 100% !important
+}
+
+.customCard h4 {
+    font-size: 18px;
+    width: 100%;
+    padding: 0 15px 15px 15px;
+    display: none;
+}
+
+.customCard h5 {
+    color: #333;
+    font-size: 15px;
+    margin: 10px 0 1px 0;
+    color: #333;
+    font-size: 15px;
+    margin: 10px 0 1px 0;
+    width: 150px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.checkoutProduct {
+    max-width: 100px;
+}
+
+.productData {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #000;
+    font-weight: 500;
+    flex-wrap: wrap;
+}
+
+.customCard.success {
+    position: relative
+}
+
+.customCard.success::before {
+    position: absolute;
+    content: "";
+    background: #32632d;
+    width: 50px;
+    height: 50px;
+    right: -26px;
+    top: -26px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    z-index: 1;
+}
+
+.customCard.success i {
+    color: #fff;
+    position: absolute;
+    top: 4px;
+    right: 3px;
+    font-size: 12px;
+    z-index: 1;
+}
+
+.flex_end {
+    display: flex;
+    justify-content: flex-end;
+    min-height: 35px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.gridRight {
+    background: #fff;
+    padding: 30px;
+    box-shadow: 0 0 5px #ccc;
+    min-height: 200px;
+    margin: 0 0 15px 0;
+}
+
+button.listView {
+    background: #fff;
+    padding: 4px 10px 3px 10px;
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    margin: 0 15px 0 0;
+}
+
+button.listView.btActive {
+    background: #9c1a2c;
+    color: #fff;
+}
+
+.activeHighlight {
+    background: #9c1a2c;
+    color: #fff;
+}
+
+.card.customCard.gridViewCol {
+    width: calc(25% - 30px);
+    flex-direction: column;
+    margin: 15px;
+}
+
+.card.customCard.gridViewCol .col-md-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+
+.card.customCard.gridViewCol .checkoutProduct {
+    max-width: calc(100% + 30px);
+    margin: 0 auto 0 auto;
+    object-fit: contain;
+    height: 100px;
+}
+
+.card.customCard.gridViewCol h5 {
+    width: 100%;
+    margin-bottom: 11px;
+}
+
+.searchHistory {
+    max-width: 280px;
+    margin: 0 15px 0 0px;
+    height: 30px;
+    width: 100%;
+}

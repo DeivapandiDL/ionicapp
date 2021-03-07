@@ -1,0 +1,75 @@
+.productSummary {
+    background: #ffffff;
+    padding: 15px;
+    box-shadow: 0 1px 3px #ccc
+}
+
+.totalsum {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 0 6px 0;
+    border-bottom: 1px solid #ccc;
+    margin: 0 0 5px 0;
+}
+
+.borderunset {
+    border: unset
+}
+
+.tableView {
+    background: #fff;
+    padding: 15px;
+}
+
+.checkoutProduct {
+    max-width: 100px;
+}
+
+.cartDatas {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 10px 15px 10px 0;
+    align-items: center;
+}
+
+.cartDatas .cartProductName {
+    width: 100px;
+}
+
+.cartDatas .countCart {
+    display: flex;
+    width: 90px;
+}
+
+.cartDatas .countCart button {
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 0px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    -ms-border-radius: 0px;
+    -o-border-radius: 0px;
+    width: 30px;
+    height: 30px;
+}
+
+.cartDatas .countCart input {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-left: 0px;
+    border-right: 0px;
+    border-radius: 0px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    -ms-border-radius: 0px;
+    -o-border-radius: 0px;
+}
+
+.cartDatas .priceCartCount {
+    color: #9c1a2c;
+    font-weight: bold;
+    text-align: right;
+    width: 80px
+}

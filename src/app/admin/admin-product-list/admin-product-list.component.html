@@ -1,0 +1,101 @@
+<div class="paddTop">
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="addProductTable">
+                        <h2 class="py-4">Product List</h2>
+                        <div class="row fxRight">
+                            <div class="form-group mb-4 col-md-4">
+                                <input class="form-control" type="text" [(ngModel)]="searchText" placeholder="Search">
+                            </div>
+                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col" (click)="sort(col.propertyName)">#</th>
+                                    <th scope="col" (click)="sort('productName')">Product Name</th>
+                                    <th scope="col" (click)="sort('productDescription')">Product Description</th>
+                                    <th scope="col" (click)="sort('quantity')">Quantity</th>
+                                    <th scope="col" (click)="sort('productRate')">Product Price</th>
+                                    <th scope="col" (click)="sort('createdDate')">Created Date</th>
+                                    <th scope="col" (click)="sort('expiryDate')">Exipiry Date</th>
+                                    <th scope="col">Edit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let product of getProducts | filter : searchText | paginate: { itemsPerPage: 8, currentPage: p }; let i = index;">
+                                    <th scope="row">{{i + 1}}</th>
+                                    <td>
+                                        <p class="truncTd">{{product.productName}}</p>
+                                    </td>
+                                    <td>
+                                        <p class="truncTd" tooltip="{{product.productDescription}}" placement="top">{{product.productDescription}}</p>
+                                    </td>
+                                    <td>{{product.productCount}}</td>
+                                    <td>{{product.productRateSymbol}} {{product.productRate}}</td>
+                                    <td>{{product.pdtCreatedDate | date:'short'}}</td>
+                                    <td>{{product.expiryDate}}</td>
+                                    <td>
+                                        <div class="fxEdit">
+                                            <a (click)="EditProduct(product.productID)"><img class="editIcon" src="../../../assets/images/edit.png"></a>
+                                            <a class="fxDelete" (click)="DeleteProduct(product.productID,product.productName)">
+                                                <ion-icon name="trash"></ion-icon>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="pagination">
+                            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                        </div>
+                        <ng-template #noResults>
+                            <p>No results found for "{{searchText}}".</p>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <a><img src="../../../assets/images/logo.png"></a>
+
+                </div>
+                <div class="col-md-3">
+                    <h4 class="highlight">STAY CONNECTED</h4>
+                    <p>Chenithra Technologies Private Limited, Madipakkam, Ponniamman kovil street, Chennai, 560103, Tamil Nadu, India</p>
+                    <p>Call - 044-4201023</p>
+                    <p>Mail - info@chenithra.com</p>
+                </div>
+                <div class="col-md-3">
+                    <h4 class="highlight">CONTACT</h4>
+                    <p>Facebook</p>
+                    <p>Twitter</p>
+                    <p>Yaaho</p>
+                    <p>Youtube</p>
+                </div>
+                <div class="col-md-3">
+                    <h4 class="highlight">POLICY</h4>
+                    <p>Return Policy</p>
+                    <p>Terms of Use</p>
+                    <p>Security</p>
+                    <p>Privacy</p>
+                    <p>Sitemap</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="btmFooter">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    2021 Chenithra Technologies Pvt Ltd. All Rights Reserved.
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

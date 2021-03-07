@@ -1,0 +1,11 @@
+<div class="paddTop">
+    <div class="container">
+        <div class="custDetails" *ngFor="let cust of custDetails">
+            <h3>Delivery Address</h3>
+            <h5>{{cust.name}}</h5>
+            {{cust.address}}
+            <h5>Phone number</h5>
+            {{cust.phone}}
+        </div>
+    </div>
+</div>
